@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clearance Fanatic — Where Tightwads Get Their Retail Therapy</title>
+<meta name="description" content="Clearance Fanatic aggregates thousands of clearance deals from top retailers. Up to 90% off. Updated daily. Where tightwads get their retail therapy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E85D26;
+    --orange-dark: #C44D1E;
+    --orange-light: #FFF0EA;
+    --black: #111111;
+    --gray-900: #1A1A1A;
+    --gray-700: #444444;
+    --gray-500: #777777;
+    --gray-300: #CCCCCC;
+    --gray-100: #F5F5F5;
+    --white: #FFFFFF;
+    --sidebar-width: 220px;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--gray-100);
+    color: var(--black);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-300);
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--orange); }
+
+  .nav-center {
+    display: flex;
+    gap: 24px;
+  }
+
+  .nav-center a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-700);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-center a:hover { color: var(--orange); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--orange);
+    background: var(--orange-light);
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-300);
+    padding: 40px 24px 32px;
+    text-align: center;
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    color: var(--black);
+  }
+
+  .hero-headline span { color: var(--orange); }
+
+  .hero-tagline {
+    font-size: 17px;
+    color: var(--gray-500);
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+
+  .hero-tagline em {
+    color: var(--orange);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: var(--gray-500);
+    margin-bottom: 24px;
+  }
+
+  .search-wrap {
+    max-width: 580px;
+    margin: 0 auto 20px;
+    display: flex;
+    border: 2px solid var(--orange);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 4px 16px rgba(232,93,38,0.15);
+  }
+
+  .search-wrap input {
+    flex: 1;
+    padding: 12px 18px;
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--black);
+    background: transparent;
+  }
+
+  .search-wrap input::placeholder { color: var(--gray-500); }
+
+  .search-wrap button {
+    padding: 12px 24px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .search-wrap button:hover { background: var(--orange-dark); }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+
+  .hero-stat strong {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--orange);
+    display: block;
+    line-height: 1.2;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-300);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-bar-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+
+  .chip {
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--gray-300);
+    background: transparent;
+    color: var(--gray-700);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-family: var(--font-body);
+  }
+
+  .chip:hover { border-color: var(--orange); color: var(--orange); }
+  .chip.active { background: var(--orange); color: var(--white); border-color: var(--orange); }
+
+  .sort-select {
+    margin-left: auto;
+    font-size: 13px;
+    padding: 6px 10px;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    background: var(--white);
+    color: var(--gray-700);
+    font-family: var(--font-body);
+    cursor: pointer;
+  }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 200px);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    background: var(--white);
+    border-right: 1px solid var(--gray-300);
+    padding: 20px 16px;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 2px; }
+
+  .sidebar-section { margin-bottom: 24px; }
+
+  .sidebar-heading {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--gray-700);
+    padding: 5px 6px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .sidebar-item:hover { background: var(--gray-100); color: var(--orange); }
+  .sidebar-item.active { background: var(--orange-light); color: var(--orange); font-weight: 500; }
+
+  .sidebar-count {
+    font-size: 11px;
+    background: var(--gray-100);
+    color: var(--gray-500);
+    padding: 1px 6px;
+    border-radius: 999px;
+  }
+
+  .sidebar-item.active .sidebar-count {
+    background: rgba(232,93,38,0.15);
+    color: var(--orange);
+  }
+
+  .price-inputs {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .price-input {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    font-size: 12px;
+    font-family: var(--font-body);
+    color: var(--black);
+    background: var(--white);
+    width: 100%;
+  }
+
+  .price-input:focus { outline: none; border-color: var(--orange); }
+
+  .price-apply {
+    width: 100%;
+    margin-top: 8px;
+    padding: 6px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: background 0.2s;
+  }
+
+  .price-apply:hover { background: var(--orange-dark); }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--gray-700);
+    padding: 4px 0;
+    cursor: pointer;
+  }
+
+  .check-item input[type="checkbox"] {
+    accent-color: var(--orange);
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+  }
+
+  .clear-filters {
+    width: 100%;
+    padding: 7px;
+    background: transparent;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    font-size: 12px;
+    color: var(--gray-700);
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.15s;
+    margin-top: 8px;
+  }
+
+  .clear-filters:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* ── MAIN CONTENT ── */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    min-width: 0;
+  }
+
+  .results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .results-count {
+    font-size: 14px;
+    color: var(--gray-700);
+  }
+
+  .results-count strong {
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  /* ── PRODUCT GRID ── */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .product-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+    transition: all 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--gray-300);
+  }
+
+  .card-img-wrap {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: var(--gray-100);
+  }
+
+  .card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .product-card:hover .card-img-wrap img { transform: scale(1.04); }
+
+  .card-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-100);
+    color: var(--gray-300);
+    font-size: 48px;
+  }
+
+  .discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--orange);
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 999px;
+    letter-spacing: 0.3px;
+  }
+
+  .merchant-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(255,255,255,0.92);
+    font-size: 10px;
+    color: var(--gray-700);
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  .card-body {
+    padding: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--black);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .card-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--gray-100);
+    color: var(--gray-500);
+  }
+
+  .card-prices {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  .card-sale {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--orange);
+  }
+
+  .card-orig {
+    font-size: 13px;
+    color: var(--gray-500);
+    text-decoration: line-through;
+  }
+
+  .card-btn {
+    display: block;
+    width: calc(100% - 24px);
+    margin: 0 12px 12px;
+    padding: 8px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .card-btn:hover { background: var(--orange-dark); }
+
+  /* ── LOADING & EMPTY ── */
+  .loading-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .skeleton {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--gray-300);
+  }
+
+  .skeleton-img {
+    aspect-ratio: 3/4;
+    background: linear-gradient(90deg, var(--gray-100) 25%, #ebebeb 50%, var(--gray-100) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+
+  .skeleton-body { padding: 12px; }
+
+  .skeleton-line {
+    height: 12px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--gray-100) 25%, #ebebeb 50%, var(--gray-100) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    margin-bottom: 8px;
+  }
+
+  .skeleton-line.short { width: 60%; }
+  .skeleton-line.price { width: 40%; height: 18px; }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--gray-500);
+  }
+
+  .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state h3 { font-size: 18px; color: var(--gray-700); margin-bottom: 8px; }
+  .empty-state p { font-size: 14px; }
+
+  /* ── PAGINATION ── */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 24px 0;
+    flex-wrap: wrap;
+  }
+
+  .page-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-300);
+    background: var(--white);
+    color: var(--gray-700);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+  }
+
+  .page-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .page-btn.active { background: var(--orange); color: var(--white); border-color: var(--orange); }
+  .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .page-info {
+    font-size: 13px;
+    color: var(--gray-500);
+    padding: 0 8px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    color: var(--white);
+    padding: 20px 24px;
+    text-align: center;
+  }
+
+  .footer-tagline {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--orange);
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: #666;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .hero-headline { font-size: 32px; }
+    .nav-center { display: none; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .hero { padding: 24px 16px 20px; }
+    .main-content { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">Clearance<span>Fanatic</span></a>
+  <div class="nav-center">
+    <a href="#" onclick="filterGender('female')">Women</a>
+    <a href="#" onclick="filterGender('male')">Men</a>
+    <a href="#" onclick="filterGender('')">All</a>
+  </div>
+  <div class="nav-right">
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      Updated daily
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1 class="hero-headline">Where <span>tightwads</span> get<br>their retail therapy.</h1>
+  <p class="hero-tagline">Real deals. Real savings. <em>Zero guilt.</em></p>
+  <p class="hero-sub" id="hero-sub">Loading deals...</p>
+  <div class="search-wrap">
+    <input type="text" id="search-input" placeholder="Search jackets, dresses, sneakers..." autocomplete="off" />
+    <button onclick="doSearch()">&#128269; Search deals</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong id="stat-count">—</strong>products</div>
+    <div class="hero-stat"><strong>Up to 90%</strong>off retail</div>
+    <div class="hero-stat"><strong>$0</strong>to browse</div>
+    <div class="hero-stat"><strong>Daily</strong>updates</div>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-bar-label">Quick filter:</span>
+  <button class="chip active" id="chip-all" onclick="quickFilter('all')">All</button>
+  <button class="chip" id="chip-women" onclick="quickFilter('female')">Women</button>
+  <button class="chip" id="chip-men" onclick="quickFilter('male')">Men</button>
+  <button class="chip" id="chip-50" onclick="quickFilter('50')">50%+ off</button>
+  <button class="chip" id="chip-70" onclick="quickFilter('70')">70%+ off</button>
+  <button class="chip" id="chip-80" onclick="quickFilter('80')">80%+ off</button>
+  <button class="chip" id="chip-under10" onclick="quickFilter('under10')">Under $10</button>
+  <select class="sort-select" id="sort-select" onchange="changeSort()">
+    <option value="discount_percent:desc">Biggest discount first</option>
+    <option value="sale_price:asc">Lowest price first</option>
+    <option value="price:desc">Highest original price</option>
+  </select>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Category</div>
+      <div id="category-list">
+        <div class="sidebar-item active" onclick="filterCategory('')">
+          All categories <span class="sidebar-count" id="total-count">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Discount %</div>
+      <div class="check-item"><input type="checkbox" id="disc-50" onchange="applyFilters()"> 50% or more off</div>
+      <div class="check-item"><input type="checkbox" id="disc-70" onchange="applyFilters()"> 70% or more off</div>
+      <div class="check-item"><input type="checkbox" id="disc-80" onchange="applyFilters()"> 80% or more off</div>
+      <div class="check-item"><input type="checkbox" id="disc-90" onchange="applyFilters()"> 90% or more off</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Price range</div>
+      <div class="price-inputs">
+        <input class="price-input" type="number" id="price-min" placeholder="$0" min="0">
+        <input class="price-input" type="number" id="price-max" placeholder="$500" min="0">
+      </div>
+      <button class="price-apply" onclick="applyFilters()">Apply price filter</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Gender</div>
+      <div class="check-item"><input type="checkbox" id="gen-female" onchange="applyFilters()"> Women</div>
+      <div class="check-item"><input type="checkbox" id="gen-male" onchange="applyFilters()"> Men</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Color</div>
+      <div id="color-list"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Size</div>
+      <div id="size-list"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Merchant</div>
+      <div id="merchant-list"></div>
+    </div>
+
+    <button class="clear-filters" onclick="clearAllFilters()">Clear all filters</button>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="results-header">
+      <div class="results-count" id="results-count">Loading...</div>
+    </div>
+    <div id="product-grid" class="product-grid"></div>
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-tagline">Where tightwads get their retail therapy.</div>
+  <div class="footer-copy">© 2026 ClearanceFanatic.com — Deals updated daily. Prices subject to change.</div>
+</footer>
+
+<script>
+// ─────────────────────────────────────────
+// CONFIGURATION — update these values
+// ─────────────────────────────────────────
+const TYPESENSE_HOST    = 'w7vkyiopn2jlg0tcp-1.a1.typesense.net';
+const TYPESENSE_API_KEY = 'YOUR_SEARCH_ONLY_API_KEY'; // search-only key
+const COLLECTION        = 'products';
+const PER_PAGE          = 24;
+
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+let state = {
+  query:       '*',
+  page:        1,
+  sortBy:      'discount_percent:desc',
+  category:    '',
+  gender:      '',
+  minDiscount: 0,
+  minPrice:    0,
+  maxPrice:    0,
+  color:       '',
+  size:        '',
+  merchant:    '',
+  totalFound:  0,
+};
+
+// ─────────────────────────────────────────
+// TYPESENSE SEARCH
+// ─────────────────────────────────────────
+async function search() {
+  showSkeletons();
+
+  const filters = buildFilterString();
+
+  const params = new URLSearchParams({
+    q:                  state.query,
+    query_by:           'title,brand,category,merchant,color,size',
+    per_page:           PER_PAGE,
+    page:               state.page,
+    sort_by:            state.sortBy,
+    group_by:           'item_group_id',
+    group_limit:        '1',
+    facet_by:           'category,merchant,color,size,gender',
+    max_facet_values:   '20',
+  });
+
+  if (filters) params.set('filter_by', filters);
+
+  try {
+    const res = await fetch(
+      `https://${TYPESENSE_HOST}/collections/${COLLECTION}/documents/search?${params}`,
+      { headers: { 'X-TYPESENSE-API-KEY': eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4 } }
+    );
+    const data = await res.json();
+    renderResults(data);
+    renderFacets(data.facet_counts);
+    updateStats(data);
+  } catch (err) {
+    showError(err);
+  }
+}
+
+function buildFilterString() {
+  const parts = [];
+
+  parts.push('availability:=true');
+  parts.push('discount_percent:>0');
+
+  if (state.minDiscount > 0) {
+    parts.push(`discount_percent:>=${state.minDiscount}`);
+  }
+
+  if (state.minPrice > 0) parts.push(`sale_price:>=${state.minPrice}`);
+  if (state.maxPrice > 0) parts.push(`sale_price:<=${state.maxPrice}`);
+
+  if (state.gender)   parts.push(`gender:=${state.gender}`);
+  if (state.category) parts.push(`category:="${state.category}"`);
+  if (state.color)    parts.push(`color:="${state.color}"`);
+  if (state.size)     parts.push(`size:="${state.size}"`);
+  if (state.merchant) parts.push(`merchant:="${state.merchant}"`);
+
+  return parts.join(' && ');
+}
+
+// ─────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────
+function renderResults(data) {
+  const grid = document.getElementById('product-grid');
+  const groups = data.grouped_hits || [];
+
+  if (groups.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon">🏷️</div>
+        <h3>No deals found</h3>
+        <p>Try adjusting your filters or search terms</p>
+      </div>`;
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+
+  state.totalFound = data.found || 0;
+
+  grid.innerHTML = groups.map(group => {
+    const hit  = group.hits[0];
+    const doc  = hit.document;
+    return productCard(doc);
+  }).join('');
+
+  renderPagination(data.found, data.request_params?.per_page || PER_PAGE);
+
+  const start = ((state.page - 1) * PER_PAGE) + 1;
+  const end   = Math.min(state.page * PER_PAGE, data.found_docs || data.found);
+  document.getElementById('results-count').innerHTML =
+    `Showing <strong>${start.toLocaleString()}–${end.toLocaleString()}</strong> of <strong>${(data.found_docs || data.found).toLocaleString()}</strong> clearance deals`;
+}
+
+function productCard(doc) {
+  const img = doc.image_url
+    ? `<img src="${escHtml(doc.image_url)}" alt="${escHtml(doc.title)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>🏷️</div>'">`
+    : `<div class="card-img-placeholder">🏷️</div>`;
+
+  const tags = [doc.color, doc.size].filter(Boolean).slice(0, 2)
+    .map(t => `<span class="card-tag">${escHtml(t)}</span>`).join('');
+
+  return `
+    <a class="product-card" href="${escHtml(doc.product_url)}" target="_blank" rel="noopener noreferrer">
+      <div class="card-img-wrap">
+        ${img}
+        <div class="discount-badge">${doc.discount_percent}% off</div>
+        <div class="merchant-badge">${escHtml(doc.merchant || '')}</div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${escHtml(doc.title)}</div>
+        ${tags ? `<div class="card-meta">${tags}</div>` : ''}
+        <div class="card-prices">
+          <span class="card-sale">$${Number(doc.sale_price).toFixed(2)}</span>
+          <span class="card-orig">$${Number(doc.price).toFixed(2)}</span>
+        </div>
+      </div>
+      <div class="card-btn">Shop now →</div>
+    </a>`;
+}
+
+function renderPagination(found, perPage) {
+  const totalPages = Math.min(Math.ceil(found / perPage), 50);
+  if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+
+  let html = '';
+  html += `<button class="page-btn" onclick="goPage(${state.page - 1})" ${state.page === 1 ? 'disabled' : ''}>&#8592;</button>`;
+
+  const pages = getPageNumbers(state.page, totalPages);
+  pages.forEach(p => {
+    if (p === '...') {
+      html += `<span class="page-info">...</span>`;
+    } else {
+      html += `<button class="page-btn ${p === state.page ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`;
+    }
+  });
+
+  html += `<button class="page-btn" onclick="goPage(${state.page + 1})" ${state.page === totalPages ? 'disabled' : ''}>&#8594;</button>`;
+  html += `<span class="page-info">${found.toLocaleString()} total</span>`;
+
+  document.getElementById('pagination').innerHTML = html;
+}
+
+function getPageNumbers(current, total) {
+  if (total <= 7) return Array.from({length: total}, (_, i) => i + 1);
+  if (current <= 4) return [1,2,3,4,5,'...',total];
+  if (current >= total - 3) return [1,'...',total-4,total-3,total-2,total-1,total];
+  return [1,'...',current-1,current,current+1,'...',total];
+}
+
+function renderFacets(facets) {
+  if (!facets) return;
+
+  facets.forEach(facet => {
+    if (facet.field_name === 'category') {
+      const list = document.getElementById('category-list');
+      const activeClass = state.category === '' ? 'active' : '';
+      let html = `<div class="sidebar-item ${activeClass}" onclick="filterCategory('')">
+        All categories <span class="sidebar-count" id="total-count">${state.totalFound.toLocaleString()}</span>
+      </div>`;
+      facet.counts.slice(0, 10).forEach(c => {
+        const active = state.category === c.value ? 'active' : '';
+        const label = c.value.split('>').pop().trim();
+        html += `<div class="sidebar-item ${active}" onclick="filterCategory('${escJs(c.value)}')">
+          ${escHtml(label)} <span class="sidebar-count">${c.count.toLocaleString()}</span>
+        </div>`;
+      });
+      list.innerHTML = html;
+    }
+
+    if (facet.field_name === 'color') {
+      const list = document.getElementById('color-list');
+      list.innerHTML = facet.counts.slice(0, 12).map(c => `
+        <div class="check-item">
+          <input type="checkbox" ${state.color === c.value ? 'checked' : ''}
+            onchange="filterFacet('color', '${escJs(c.value)}', this.checked)">
+          ${escHtml(c.value)} <span style="font-size:11px;color:#999;margin-left:auto">${c.count}</span>
+        </div>`).join('');
+    }
+
+    if (facet.field_name === 'size') {
+      const list = document.getElementById('size-list');
+      list.innerHTML = facet.counts.slice(0, 15).map(c => `
+        <div class="check-item">
+          <input type="checkbox" ${state.size === c.value ? 'checked' : ''}
+            onchange="filterFacet('size', '${escJs(c.value)}', this.checked)">
+          ${escHtml(c.value)} <span style="font-size:11px;color:#999;margin-left:auto">${c.count}</span>
+        </div>`).join('');
+    }
+
+    if (facet.field_name === 'merchant') {
+      const list = document.getElementById('merchant-list');
+      list.innerHTML = facet.counts.map(c => `
+        <div class="check-item">
+          <input type="checkbox" ${state.merchant === c.value ? 'checked' : ''}
+            onchange="filterFacet('merchant', '${escJs(c.value)}', this.checked)">
+          ${escHtml(c.value)} <span style="font-size:11px;color:#999;margin-left:auto">${c.count}</span>
+        </div>`).join('');
+    }
+  });
+}
+
+function updateStats(data) {
+  const total = (data.found_docs || data.found || 0).toLocaleString();
+  document.getElementById('stat-count').textContent = total;
+  document.getElementById('hero-sub').textContent =
+    `${total} clearance items from top retailers — updated daily`;
+  const el = document.getElementById('total-count');
+  if (el) el.textContent = total;
+}
+
+function showSkeletons() {
+  document.getElementById('product-grid').innerHTML =
+    Array(12).fill(`
+      <div class="skeleton">
+        <div class="skeleton-img"></div>
+        <div class="skeleton-body">
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line short"></div>
+          <div class="skeleton-line price"></div>
+        </div>
+      </div>`).join('');
+  document.getElementById('pagination').innerHTML = '';
+  document.getElementById('results-count').textContent = 'Loading...';
+}
+
+function showError(err) {
+  document.getElementById('product-grid').innerHTML = `
+    <div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon">⚠️</div>
+      <h3>Could not load products</h3>
+      <p>Please check your connection and try again.</p>
+    </div>`;
+}
+
+// ─────────────────────────────────────────
+// FILTER ACTIONS
+// ─────────────────────────────────────────
+function doSearch() {
+  const val = document.getElementById('search-input').value.trim();
+  state.query = val || '*';
+  state.page  = 1;
+  search();
+}
+
+function quickFilter(type) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+
+  state.gender = '';
+  state.minDiscount = 0;
+  state.maxPrice = 0;
+  state.minPrice = 0;
+  state.page = 1;
+
+  if (type === 'female')  { state.gender = 'female'; document.getElementById('chip-women').classList.add('active'); }
+  else if (type === 'male') { state.gender = 'male'; document.getElementById('chip-men').classList.add('active'); }
+  else if (type === '50') { state.minDiscount = 50; document.getElementById('chip-50').classList.add('active'); }
+  else if (type === '70') { state.minDiscount = 70; document.getElementById('chip-70').classList.add('active'); }
+  else if (type === '80') { state.minDiscount = 80; document.getElementById('chip-80').classList.add('active'); }
+  else if (type === 'under10') { state.maxPrice = 10; document.getElementById('chip-under10').classList.add('active'); }
+  else { document.getElementById('chip-all').classList.add('active'); }
+
+  search();
+}
+
+function filterCategory(cat) {
+  state.category = cat;
+  state.page = 1;
+  search();
+}
+
+function filterGender(gender) {
+  state.gender = gender;
+  state.page = 1;
+  search();
+}
+
+function filterFacet(field, value, checked) {
+  state[field] = checked ? value : '';
+  state.page = 1;
+  search();
+}
+
+function applyFilters() {
+  const minP = parseFloat(document.getElementById('price-min').value) || 0;
+  const maxP = parseFloat(document.getElementById('price-max').value) || 0;
+  state.minPrice = minP;
+  state.maxPrice = maxP;
+
+  const discLevels = [
+    { id: 'disc-90', val: 90 },
+    { id: 'disc-80', val: 80 },
+    { id: 'disc-70', val: 70 },
+    { id: 'disc-50', val: 50 },
+  ];
+
+  state.minDiscount = 0;
+  for (const d of discLevels) {
+    if (document.getElementById(d.id).checked) {
+      state.minDiscount = d.val;
+      break;
+    }
+  }
+
+  const genFemale = document.getElementById('gen-female').checked;
+  const genMale   = document.getElementById('gen-male').checked;
+  if (genFemale && !genMale)       state.gender = 'female';
+  else if (genMale && !genFemale)  state.gender = 'male';
+  else                             state.gender = '';
+
+  state.page = 1;
+  search();
+}
+
+function changeSort() {
+  state.sortBy = document.getElementById('sort-select').value;
+  state.page   = 1;
+  search();
+}
+
+function goPage(page) {
+  if (page < 1) return;
+  state.page = page;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  search();
+}
+
+function clearAllFilters() {
+  state = { ...state, query: '*', page: 1, gender: '', category: '',
+    minDiscount: 0, minPrice: 0, maxPrice: 0, color: '', size: '', merchant: '' };
+  document.getElementById('search-input').value = '';
+  document.getElementById('price-min').value = '';
+  document.getElementById('price-max').value = '';
+  document.querySelectorAll('.sidebar input[type=checkbox]').forEach(c => c.checked = false);
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.getElementById('chip-all').classList.add('active');
+  search();
+}
+
+// ─────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function escJs(s) {
+  return String(s || '').replace(/'/g,"\\'").replace(/\\/g,'\\\\');
+}
+
+// Enter key on search
+document.getElementById('search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+search();
+</script>
+</body>
+</html>
