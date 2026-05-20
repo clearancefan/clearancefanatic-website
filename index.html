@@ -871,7 +871,7 @@ async function search() {
   try {
     const res = await fetch(
       `https://${TYPESENSE_HOST}/collections/${COLLECTION}/documents/search?${params}`,
-      { headers: { 'X-TYPESENSE-API-KEY': eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4 } }
+      { headers: { 'X-TYPESENSE-API-KEY': 'eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4' } }
     );
     const data = await res.json();
     renderResults(data);
