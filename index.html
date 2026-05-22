@@ -950,7 +950,7 @@
 // CONFIGURATION — update these values
 // ─────────────────────────────────────────
 const TYPESENSE_HOST    = 'w7vkyiopn2jlg0tcp-1.a1.typesense.net';
-const TYPESENSE_API_KEY = 'eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4'; // search-only key
+const TYPESENSE_API_KEY = 'YOUR_SEARCH_ONLY_API_KEY'; // search-only key
 const COLLECTION        = 'products';
 const PER_PAGE          = 24;
 
@@ -1324,6 +1324,56 @@ function escJs(s) {
 document.getElementById('search-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') doSearch();
 });
+
+
+// ─────────────────────────────────────────
+// COOKIE CONSENT
+// ─────────────────────────────────────────
+function cfStorage(action, key, value) {
+  // Robust storage with fallback to sessionStorage then memory
+  try {
+    if (action === 'get') return localStorage.getItem(key);
+    if (action === 'set') { localStorage.setItem(key, value); return true; }
+  } catch(e) {
+    try {
+      if (action === 'get') return sessionStorage.getItem(key);
+      if (action === 'set') { sessionStorage.setItem(key, value); return true; }
+    } catch(e2) { return null; }
+  }
+}
+
+function initCookieBanner() {
+  const banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+  const consent = cfStorage('get', 'cf_cookie_consent');
+  if (consent === 'accepted' || consent === 'declined') {
+    banner.style.display = 'none';
+  } else {
+    banner.style.display = 'flex';
+  }
+}
+
+function acceptCookies() {
+  cfStorage('set', 'cf_cookie_consent', 'accepted');
+  const banner = document.getElementById('cookie-banner');
+  if (banner) {
+    banner.style.opacity = '0';
+    banner.style.transition = 'opacity 0.3s';
+    setTimeout(() => banner.style.display = 'none', 300);
+  }
+}
+
+function declineCookies() {
+  cfStorage('set', 'cf_cookie_consent', 'declined');
+  const banner = document.getElementById('cookie-banner');
+  if (banner) {
+    banner.style.opacity = '0';
+    banner.style.transition = 'opacity 0.3s';
+    setTimeout(() => banner.style.display = 'none', 300);
+  }
+}
+
+initCookieBanner();
 
 // ─────────────────────────────────────────
 // INIT
