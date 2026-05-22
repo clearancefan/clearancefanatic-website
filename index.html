@@ -664,7 +664,7 @@
   footer {
     background: var(--black);
     color: var(--white);
-    padding: 20px 24px;
+    padding: 32px 24px 20px;
     text-align: center;
   }
 
@@ -673,14 +673,108 @@
     font-size: 16px;
     font-weight: 600;
     color: var(--orange);
-    margin-bottom: 6px;
+    margin-bottom: 12px;
     letter-spacing: 0.3px;
   }
 
-  .footer-copy {
-    font-size: 12px;
-    color: #666;
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 20px;
+    margin-bottom: 16px;
   }
+
+  .footer-links a {
+    font-size: 12px;
+    color: #999;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--orange); }
+
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: #333;
+    margin: 0 auto 16px;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .footer-affiliate {
+    font-size: 11px;
+    color: #444;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── COOKIE BANNER ── */
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1A1A2E;
+    border-top: 2px solid var(--orange);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 9999;
+    flex-wrap: wrap;
+  }
+
+  .cookie-banner p {
+    font-size: 13px;
+    color: #ccc;
+    margin: 0;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .cookie-banner a { color: var(--orange); text-decoration: underline; }
+
+  .cookie-btns {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .cookie-accept {
+    padding: 8px 20px;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: background 0.2s;
+  }
+
+  .cookie-accept:hover { background: var(--orange-dark); }
+
+  .cookie-decline {
+    padding: 8px 16px;
+    background: transparent;
+    color: #999;
+    border: 1px solid #444;
+    border-radius: var(--radius);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.2s;
+  }
+
+  .cookie-decline:hover { border-color: #666; color: #ccc; }
 
   /* ── MOBILE ── */
   @media (max-width: 768px) {
@@ -813,10 +907,42 @@
 
 </div>
 
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookie-banner">
+  <p>
+    We use cookies to improve your experience and track affiliate commissions. By continuing to use this site, you agree to our
+    <a href="cookie-policy.html">Cookie Policy</a> and <a href="privacy-policy.html">Privacy Policy</a>.
+  </p>
+  <div class="cookie-btns">
+    <button class="cookie-decline" onclick="declineCookies()">Decline</button>
+    <button class="cookie-accept" onclick="acceptCookies()">Accept All</button>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-tagline">Where tightwads get their retail therapy.</div>
-  <div class="footer-copy">© 2026 ClearanceFanatic.com — Deals updated daily. Prices subject to change.</div>
+
+  <div class="footer-links">
+    <a href="affiliate-disclosure.html">Affiliate Disclosure</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms-of-use.html">Terms of Use</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+    <a href="earnings-disclaimer.html">Earnings Disclaimer</a>
+    <a href="amazon-disclosure.html">Amazon Disclosure</a>
+    <a href="dmca.html">DMCA</a>
+  </div>
+
+  <div class="footer-divider"></div>
+
+  <div class="footer-copy">
+    © 2026 Clearance Fanatic LLC — clearancefanatic.com — All rights reserved.<br>
+    Deals updated daily. Prices and availability subject to change without notice.
+  </div>
+  <div class="footer-affiliate">
+    Clearance Fanatic LLC is a participant in affiliate advertising programs including the Amazon Services LLC Associates Program.
+    We earn commissions from qualifying purchases at no extra cost to you.
+  </div>
 </footer>
 
 <script>
@@ -871,7 +997,7 @@ async function search() {
   try {
     const res = await fetch(
       `https://${TYPESENSE_HOST}/collections/${COLLECTION}/documents/search?${params}`,
-      { headers: { 'X-TYPESENSE-API-KEY': 'eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4' } }
+      { headers: { 'X-TYPESENSE-API-KEY': TYPESENSE_API_KEY } }
     );
     const data = await res.json();
     renderResults(data);
