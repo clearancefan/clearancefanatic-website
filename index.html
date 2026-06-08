@@ -46,7 +46,7 @@
     min-height: 100vh;
   }
 
-  /* ── NAV ── */
+  /* NAV */
   nav {
     background: var(--white);
     border-bottom: 1px solid var(--gray-300);
@@ -119,7 +119,92 @@
     50% { opacity: 0.4; }
   }
 
-  /* ── HERO ── */
+  /* MOBILE FILTER TOGGLE */
+  .mobile-filter-btn {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* MOBILE FILTER OVERLAY */
+  .mobile-filter-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+  }
+
+  .mobile-filter-overlay.open { display: block; }
+
+  .mobile-filter-drawer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--white);
+    overflow-y: auto;
+    padding: 16px;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .mobile-filter-overlay.open .mobile-filter-drawer {
+    transform: translateX(0);
+  }
+
+  .mobile-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--gray-300);
+  }
+
+  .mobile-drawer-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .mobile-drawer-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--gray-500);
+    line-height: 1;
+    padding: 4px;
+  }
+
+  .mobile-drawer-close:hover { color: var(--black); }
+
+  .mobile-apply-btn {
+    width: 100%;
+    padding: 10px;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+
+  /* HERO */
   .hero {
     background: var(--white);
     border-bottom: 1px solid var(--gray-300);
@@ -219,7 +304,7 @@
     line-height: 1.2;
   }
 
-  /* ── FILTER BAR ── */
+  /* FILTER BAR */
   .filter-bar {
     background: var(--white);
     border-bottom: 1px solid var(--gray-300);
@@ -268,7 +353,7 @@
     cursor: pointer;
   }
 
-  /* ── LAYOUT ── */
+  /* LAYOUT */
   .layout {
     display: flex;
     max-width: 1400px;
@@ -276,7 +361,7 @@
     min-height: calc(100vh - 200px);
   }
 
-  /* ── SIDEBAR ── */
+  /* SIDEBAR */
   .sidebar {
     width: var(--sidebar-width);
     min-width: var(--sidebar-width);
@@ -387,6 +472,7 @@
     width: 14px;
     height: 14px;
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .clear-filters {
@@ -405,7 +491,7 @@
 
   .clear-filters:hover { border-color: var(--orange); color: var(--orange); }
 
-  /* ── MAIN CONTENT ── */
+  /* MAIN CONTENT */
   .main-content {
     flex: 1;
     padding: 20px;
@@ -429,7 +515,7 @@
     color: var(--black);
   }
 
-  /* ── PRODUCT GRID ── */
+  /* PRODUCT GRID */
   .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -517,6 +603,14 @@
     gap: 6px;
   }
 
+  .card-brand {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
   .card-title {
     font-size: 13px;
     line-height: 1.4;
@@ -582,7 +676,7 @@
 
   .card-btn:hover { background: var(--orange-dark); }
 
-  /* ── LOADING & EMPTY ── */
+  /* LOADING & EMPTY */
   .loading-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -632,7 +726,7 @@
   .empty-state h3 { font-size: 18px; color: var(--gray-700); margin-bottom: 8px; }
   .empty-state p { font-size: 14px; }
 
-  /* ── PAGINATION ── */
+  /* PAGINATION */
   .pagination {
     display: flex;
     align-items: center;
@@ -668,7 +762,7 @@
     padding: 0 8px;
   }
 
-  /* ── FOOTER ── */
+  /* FOOTER */
   footer {
     background: var(--black);
     color: var(--white);
@@ -722,7 +816,7 @@
     font-style: italic;
   }
 
-  /* ── COOKIE BANNER ── */
+  /* COOKIE BANNER */
   .cookie-banner {
     position: fixed;
     bottom: 0;
@@ -784,14 +878,17 @@
 
   .cookie-decline:hover { border-color: #666; color: #ccc; }
 
-  /* ── MOBILE ── */
+  /* MOBILE */
   @media (max-width: 768px) {
     .sidebar { display: none; }
+    .mobile-filter-btn { display: flex; }
     .hero-headline { font-size: 32px; }
     .nav-center { display: none; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .hero { padding: 24px 16px 20px; }
     .main-content { padding: 12px; }
+    .filter-bar { padding: 10px 12px; }
+    .hero-stats { gap: 16px; }
   }
 </style>
 </head>
@@ -806,12 +903,68 @@
     <a href="#" onclick="filterGender('')">All</a>
   </div>
   <div class="nav-right">
+    <button class="mobile-filter-btn" onclick="openMobileFilters()">&#9776; Filters</button>
     <div class="live-badge">
       <div class="live-dot"></div>
       Updated daily
     </div>
   </div>
 </nav>
+
+<!-- MOBILE FILTER DRAWER -->
+<div class="mobile-filter-overlay" id="mobile-filter-overlay" onclick="closeMobileFiltersOnOverlay(event)">
+  <div class="mobile-filter-drawer">
+    <div class="mobile-drawer-header">
+      <span class="mobile-drawer-title">Filters</span>
+      <button class="mobile-drawer-close" onclick="closeMobileFilters()">&#x2715;</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Category</div>
+      <div id="mobile-category-list">
+        <div class="sidebar-item active" onclick="filterCategory(''); closeMobileFilters()">
+          All categories <span class="sidebar-count" id="mobile-total-count">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Brand</div>
+      <div id="mobile-brand-list"></div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Discount %</div>
+      <div class="check-item"><input type="checkbox" id="mobile-disc-50" onchange="syncFromMobile()"> 50% or more off</div>
+      <div class="check-item"><input type="checkbox" id="mobile-disc-70" onchange="syncFromMobile()"> 70% or more off</div>
+      <div class="check-item"><input type="checkbox" id="mobile-disc-80" onchange="syncFromMobile()"> 80% or more off</div>
+      <div class="check-item"><input type="checkbox" id="mobile-disc-90" onchange="syncFromMobile()"> 90% or more off</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Price range</div>
+      <div class="price-inputs">
+        <input class="price-input" type="number" id="mobile-price-min" placeholder="$0" min="0">
+        <input class="price-input" type="number" id="mobile-price-max" placeholder="$500" min="0">
+      </div>
+      <button class="price-apply" onclick="applyMobilePriceFilter()">Apply price filter</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Gender</div>
+      <div class="check-item"><input type="checkbox" id="mobile-gen-female" onchange="syncFromMobile()"> Women</div>
+      <div class="check-item"><input type="checkbox" id="mobile-gen-male" onchange="syncFromMobile()"> Men</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Merchant</div>
+      <div id="mobile-merchant-list"></div>
+    </div>
+
+    <button class="clear-filters" onclick="clearAllFilters()">Clear all filters</button>
+    <button class="mobile-apply-btn" onclick="closeMobileFilters()">See results</button>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -860,6 +1013,11 @@
           All categories <span class="sidebar-count" id="total-count">—</span>
         </div>
       </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Brand</div>
+      <div id="brand-list"></div>
     </div>
 
     <div class="sidebar-section">
@@ -930,7 +1088,6 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-tagline">Where tightwads get their retail therapy.</div>
-
   <div class="footer-links">
     <a href="affiliate-disclosure.html">Affiliate Disclosure</a>
     <a href="privacy-policy.html">Privacy Policy</a>
@@ -940,9 +1097,7 @@
     <a href="amazon-disclosure.html">Amazon Disclosure</a>
     <a href="dmca.html">DMCA</a>
   </div>
-
   <div class="footer-divider"></div>
-
   <div class="footer-copy">
     © 2026 Clearance Fanatic LLC — clearancefanatic.com — All rights reserved.<br>
     Deals updated daily. Prices and availability subject to change without notice.
@@ -955,10 +1110,10 @@
 
 <script>
 // ─────────────────────────────────────────
-// CONFIGURATION — update these values
+// CONFIGURATION
 // ─────────────────────────────────────────
 const TYPESENSE_HOST    = 'w7vkyiopn2jlg0tcp-1.a1.typesense.net';
-const TYPESENSE_API_KEY = 'eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4'; // search-only key
+const TYPESENSE_API_KEY = 'eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4';
 const COLLECTION        = 'products';
 const PER_PAGE          = 24;
 
@@ -977,6 +1132,7 @@ let state = {
   color:       '',
   size:        '',
   merchant:    '',
+  brand:       '',
   totalFound:  0,
 };
 
@@ -989,15 +1145,15 @@ async function search() {
   const filters = buildFilterString();
 
   const params = new URLSearchParams({
-    q:                  state.query,
-    query_by:           'title,brand,category,merchant,color,size',
-    per_page:           PER_PAGE,
-    page:               state.page,
-    sort_by:            state.sortBy,
-    group_by:           'item_group_id',
-    group_limit:        '1',
-    facet_by:           'category,merchant,color,size,gender',
-    max_facet_values:   '20',
+    q:                state.query,
+    query_by:         'title,brand,category,merchant,color,size',
+    per_page:         PER_PAGE,
+    page:             state.page,
+    sort_by:          state.sortBy,
+    group_by:         'item_group_id',
+    group_limit:      '1',
+    facet_by:         'category,brand,merchant,color,size,gender',
+    max_facet_values: '30',
   });
 
   if (filters) params.set('filter_by', filters);
@@ -1018,23 +1174,17 @@ async function search() {
 
 function buildFilterString() {
   const parts = [];
-
   parts.push('availability:=true');
   parts.push('discount_percent:>0');
-
-  if (state.minDiscount > 0) {
-    parts.push(`discount_percent:>=${state.minDiscount}`);
-  }
-
-  if (state.minPrice > 0) parts.push(`sale_price:>=${state.minPrice}`);
-  if (state.maxPrice > 0) parts.push(`sale_price:<=${state.maxPrice}`);
-
-  if (state.gender)   parts.push(`gender:=${state.gender}`);
-  if (state.category) parts.push(`category:="${state.category}"`);
-  if (state.color)    parts.push(`color:="${state.color}"`);
-  if (state.size)     parts.push(`size:="${state.size}"`);
-  if (state.merchant) parts.push(`merchant:="${state.merchant}"`);
-
+  if (state.minDiscount > 0)  parts.push(`discount_percent:>=${state.minDiscount}`);
+  if (state.minPrice > 0)     parts.push(`sale_price:>=${state.minPrice}`);
+  if (state.maxPrice > 0)     parts.push(`sale_price:<=${state.maxPrice}`);
+  if (state.gender)           parts.push(`gender:=${state.gender}`);
+  if (state.category)         parts.push(`category:="${state.category}"`);
+  if (state.color)            parts.push(`color:="${state.color}"`);
+  if (state.size)             parts.push(`size:="${state.size}"`);
+  if (state.merchant)         parts.push(`merchant:="${state.merchant}"`);
+  if (state.brand)            parts.push(`brand:="${state.brand}"`);
   return parts.join(' && ');
 }
 
@@ -1042,7 +1192,7 @@ function buildFilterString() {
 // RENDER
 // ─────────────────────────────────────────
 function renderResults(data) {
-  const grid = document.getElementById('product-grid');
+  const grid   = document.getElementById('product-grid');
   const groups = data.grouped_hits || [];
 
   if (groups.length === 0) {
@@ -1059,8 +1209,7 @@ function renderResults(data) {
   state.totalFound = data.found || 0;
 
   grid.innerHTML = groups.map(group => {
-    const hit  = group.hits[0];
-    const doc  = hit.document;
+    const doc = group.hits[0].document;
     return productCard(doc);
   }).join('');
 
@@ -1080,6 +1229,10 @@ function productCard(doc) {
   const tags = [doc.color, doc.size].filter(Boolean).slice(0, 2)
     .map(t => `<span class="card-tag">${escHtml(t)}</span>`).join('');
 
+  const brandLine = doc.brand && doc.brand !== doc.merchant
+    ? `<div class="card-brand">${escHtml(doc.brand)}</div>`
+    : '';
+
   return `
     <a class="product-card" href="${escHtml(doc.product_url)}" target="_blank" rel="noopener noreferrer">
       <div class="card-img-wrap">
@@ -1088,6 +1241,7 @@ function productCard(doc) {
         <div class="merchant-badge">${escHtml(doc.merchant || '')}</div>
       </div>
       <div class="card-body">
+        ${brandLine}
         <div class="card-title">${escHtml(doc.title)}</div>
         ${tags ? `<div class="card-meta">${tags}</div>` : ''}
         <div class="card-prices">
@@ -1106,8 +1260,7 @@ function renderPagination(found, perPage) {
   let html = '';
   html += `<button class="page-btn" onclick="goPage(${state.page - 1})" ${state.page === 1 ? 'disabled' : ''}>&#8592;</button>`;
 
-  const pages = getPageNumbers(state.page, totalPages);
-  pages.forEach(p => {
+  getPageNumbers(state.page, totalPages).forEach(p => {
     if (p === '...') {
       html += `<span class="page-info">...</span>`;
     } else {
@@ -1132,25 +1285,50 @@ function renderFacets(facets) {
   if (!facets) return;
 
   facets.forEach(facet => {
+
     if (facet.field_name === 'category') {
-      const list = document.getElementById('category-list');
       const activeClass = state.category === '' ? 'active' : '';
       let html = `<div class="sidebar-item ${activeClass}" onclick="filterCategory('')">
         All categories <span class="sidebar-count" id="total-count">${state.totalFound.toLocaleString()}</span>
       </div>`;
       facet.counts.slice(0, 10).forEach(c => {
         const active = state.category === c.value ? 'active' : '';
-        const label = c.value.split('>').pop().trim();
+        const label  = c.value.split('>').pop().trim();
         html += `<div class="sidebar-item ${active}" onclick="filterCategory('${escJs(c.value)}')">
           ${escHtml(label)} <span class="sidebar-count">${c.count.toLocaleString()}</span>
         </div>`;
       });
-      list.innerHTML = html;
+      document.getElementById('category-list').innerHTML = html;
+
+      // Mirror to mobile drawer
+      let mobileHtml = `<div class="sidebar-item ${activeClass}" onclick="filterCategory(''); closeMobileFilters()">
+        All categories <span class="sidebar-count">${state.totalFound.toLocaleString()}</span>
+      </div>`;
+      facet.counts.slice(0, 10).forEach(c => {
+        const active = state.category === c.value ? 'active' : '';
+        const label  = c.value.split('>').pop().trim();
+        mobileHtml += `<div class="sidebar-item ${active}" onclick="filterCategory('${escJs(c.value)}'); closeMobileFilters()">
+          ${escHtml(label)} <span class="sidebar-count">${c.count.toLocaleString()}</span>
+        </div>`;
+      });
+      document.getElementById('mobile-category-list').innerHTML = mobileHtml;
+    }
+
+    if (facet.field_name === 'brand') {
+      const brandHtml = facet.counts.slice(0, 20).map(c => `
+        <div class="check-item">
+          <input type="checkbox" ${state.brand === c.value ? 'checked' : ''}
+            onchange="filterFacet('brand', '${escJs(c.value)}', this.checked)">
+          ${escHtml(c.value)} <span style="font-size:11px;color:#999;margin-left:auto">${c.count}</span>
+        </div>`).join('');
+      document.getElementById('brand-list').innerHTML = brandHtml;
+      document.getElementById('mobile-brand-list').innerHTML = brandHtml.replace(
+        /filterFacet\(/g, 'mobileFacet('
+      );
     }
 
     if (facet.field_name === 'color') {
-      const list = document.getElementById('color-list');
-      list.innerHTML = facet.counts.slice(0, 12).map(c => `
+      document.getElementById('color-list').innerHTML = facet.counts.slice(0, 12).map(c => `
         <div class="check-item">
           <input type="checkbox" ${state.color === c.value ? 'checked' : ''}
             onchange="filterFacet('color', '${escJs(c.value)}', this.checked)">
@@ -1159,8 +1337,7 @@ function renderFacets(facets) {
     }
 
     if (facet.field_name === 'size') {
-      const list = document.getElementById('size-list');
-      list.innerHTML = facet.counts.slice(0, 15).map(c => `
+      document.getElementById('size-list').innerHTML = facet.counts.slice(0, 15).map(c => `
         <div class="check-item">
           <input type="checkbox" ${state.size === c.value ? 'checked' : ''}
             onchange="filterFacet('size', '${escJs(c.value)}', this.checked)">
@@ -1169,13 +1346,16 @@ function renderFacets(facets) {
     }
 
     if (facet.field_name === 'merchant') {
-      const list = document.getElementById('merchant-list');
-      list.innerHTML = facet.counts.map(c => `
+      const merchantHtml = facet.counts.map(c => `
         <div class="check-item">
           <input type="checkbox" ${state.merchant === c.value ? 'checked' : ''}
             onchange="filterFacet('merchant', '${escJs(c.value)}', this.checked)">
           ${escHtml(c.value)} <span style="font-size:11px;color:#999;margin-left:auto">${c.count}</span>
         </div>`).join('');
+      document.getElementById('merchant-list').innerHTML = merchantHtml;
+      document.getElementById('mobile-merchant-list').innerHTML = merchantHtml.replace(
+        /filterFacet\(/g, 'mobileFacet('
+      );
     }
   });
 }
@@ -1214,6 +1394,57 @@ function showError(err) {
 }
 
 // ─────────────────────────────────────────
+// MOBILE DRAWER
+// ─────────────────────────────────────────
+function openMobileFilters() {
+  document.getElementById('mobile-filter-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileFilters() {
+  document.getElementById('mobile-filter-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeMobileFiltersOnOverlay(e) {
+  if (e.target === document.getElementById('mobile-filter-overlay')) {
+    closeMobileFilters();
+  }
+}
+
+// Mobile facet helper — mirrors desktop filterFacet then closes drawer
+function mobileFacet(field, value, checked) {
+  filterFacet(field, value, checked);
+}
+
+function syncFromMobile() {
+  // Sync discount checkboxes
+  const discLevels = [
+    { id: 'mobile-disc-90', val: 90 },
+    { id: 'mobile-disc-80', val: 80 },
+    { id: 'mobile-disc-70', val: 70 },
+    { id: 'mobile-disc-50', val: 50 },
+  ];
+  state.minDiscount = 0;
+  for (const d of discLevels) {
+    if (document.getElementById(d.id).checked) { state.minDiscount = d.val; break; }
+  }
+  // Sync gender
+  const f = document.getElementById('mobile-gen-female').checked;
+  const m = document.getElementById('mobile-gen-male').checked;
+  state.gender = f && !m ? 'female' : m && !f ? 'male' : '';
+  state.page = 1;
+  search();
+}
+
+function applyMobilePriceFilter() {
+  state.minPrice = parseFloat(document.getElementById('mobile-price-min').value) || 0;
+  state.maxPrice = parseFloat(document.getElementById('mobile-price-max').value) || 0;
+  state.page = 1;
+  search();
+}
+
+// ─────────────────────────────────────────
 // FILTER ACTIONS
 // ─────────────────────────────────────────
 function doSearch() {
@@ -1225,19 +1456,18 @@ function doSearch() {
 
 function quickFilter(type) {
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-
   state.gender = '';
   state.minDiscount = 0;
   state.maxPrice = 0;
   state.minPrice = 0;
   state.page = 1;
 
-  if (type === 'female')  { state.gender = 'female'; document.getElementById('chip-women').classList.add('active'); }
-  else if (type === 'male') { state.gender = 'male'; document.getElementById('chip-men').classList.add('active'); }
-  else if (type === '50') { state.minDiscount = 50; document.getElementById('chip-50').classList.add('active'); }
-  else if (type === '70') { state.minDiscount = 70; document.getElementById('chip-70').classList.add('active'); }
-  else if (type === '80') { state.minDiscount = 80; document.getElementById('chip-80').classList.add('active'); }
-  else if (type === 'under10') { state.maxPrice = 10; document.getElementById('chip-under10').classList.add('active'); }
+  if (type === 'female')    { state.gender = 'female';  document.getElementById('chip-women').classList.add('active'); }
+  else if (type === 'male') { state.gender = 'male';    document.getElementById('chip-men').classList.add('active'); }
+  else if (type === '50')   { state.minDiscount = 50;   document.getElementById('chip-50').classList.add('active'); }
+  else if (type === '70')   { state.minDiscount = 70;   document.getElementById('chip-70').classList.add('active'); }
+  else if (type === '80')   { state.minDiscount = 80;   document.getElementById('chip-80').classList.add('active'); }
+  else if (type === 'under10') { state.maxPrice = 10;   document.getElementById('chip-under10').classList.add('active'); }
   else { document.getElementById('chip-all').classList.add('active'); }
 
   search();
@@ -1257,7 +1487,7 @@ function filterGender(gender) {
 
 function filterFacet(field, value, checked) {
   state[field] = checked ? value : '';
-  state.page = 1;
+  state.page   = 1;
   search();
 }
 
@@ -1273,20 +1503,14 @@ function applyFilters() {
     { id: 'disc-70', val: 70 },
     { id: 'disc-50', val: 50 },
   ];
-
   state.minDiscount = 0;
   for (const d of discLevels) {
-    if (document.getElementById(d.id).checked) {
-      state.minDiscount = d.val;
-      break;
-    }
+    if (document.getElementById(d.id).checked) { state.minDiscount = d.val; break; }
   }
 
   const genFemale = document.getElementById('gen-female').checked;
   const genMale   = document.getElementById('gen-male').checked;
-  if (genFemale && !genMale)       state.gender = 'female';
-  else if (genMale && !genFemale)  state.gender = 'male';
-  else                             state.gender = '';
+  state.gender = genFemale && !genMale ? 'female' : genMale && !genFemale ? 'male' : '';
 
   state.page = 1;
   search();
@@ -1307,11 +1531,13 @@ function goPage(page) {
 
 function clearAllFilters() {
   state = { ...state, query: '*', page: 1, gender: '', category: '',
-    minDiscount: 0, minPrice: 0, maxPrice: 0, color: '', size: '', merchant: '' };
+    minDiscount: 0, minPrice: 0, maxPrice: 0, color: '', size: '', merchant: '', brand: '' };
   document.getElementById('search-input').value = '';
   document.getElementById('price-min').value = '';
   document.getElementById('price-max').value = '';
-  document.querySelectorAll('.sidebar input[type=checkbox]').forEach(c => c.checked = false);
+  document.querySelectorAll('#mobile-price-min, #mobile-price-max').forEach(i => i.value = '');
+  document.querySelectorAll('.sidebar input[type=checkbox], .mobile-filter-drawer input[type=checkbox]')
+    .forEach(c => c.checked = false);
   document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   document.getElementById('chip-all').classList.add('active');
   search();
@@ -1328,17 +1554,14 @@ function escJs(s) {
   return String(s || '').replace(/'/g,"\\'").replace(/\\/g,'\\\\');
 }
 
-// Enter key on search
 document.getElementById('search-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') doSearch();
 });
-
 
 // ─────────────────────────────────────────
 // COOKIE CONSENT
 // ─────────────────────────────────────────
 function cfStorage(action, key, value) {
-  // Robust storage with fallback to sessionStorage then memory
   try {
     if (action === 'get') return localStorage.getItem(key);
     if (action === 'set') { localStorage.setItem(key, value); return true; }
@@ -1351,7 +1574,7 @@ function cfStorage(action, key, value) {
 }
 
 function initCookieBanner() {
-  const banner = document.getElementById('cookie-banner');
+  const banner  = document.getElementById('cookie-banner');
   if (!banner) return;
   const consent = cfStorage('get', 'cf_cookie_consent');
   if (consent === 'accepted' || consent === 'declined') {
@@ -1364,21 +1587,13 @@ function initCookieBanner() {
 function acceptCookies() {
   cfStorage('set', 'cf_cookie_consent', 'accepted');
   const banner = document.getElementById('cookie-banner');
-  if (banner) {
-    banner.style.opacity = '0';
-    banner.style.transition = 'opacity 0.3s';
-    setTimeout(() => banner.style.display = 'none', 300);
-  }
+  if (banner) { banner.style.opacity = '0'; banner.style.transition = 'opacity 0.3s'; setTimeout(() => banner.style.display = 'none', 300); }
 }
 
 function declineCookies() {
   cfStorage('set', 'cf_cookie_consent', 'declined');
   const banner = document.getElementById('cookie-banner');
-  if (banner) {
-    banner.style.opacity = '0';
-    banner.style.transition = 'opacity 0.3s';
-    setTimeout(() => banner.style.display = 'none', 300);
-  }
+  if (banner) { banner.style.opacity = '0'; banner.style.transition = 'opacity 0.3s'; setTimeout(() => banner.style.display = 'none', 300); }
 }
 
 initCookieBanner();
