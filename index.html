@@ -264,32 +264,34 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
     <div class="mega-drop">
       <div class="mega-col">
         <div class="mega-h">Clothing</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Shirts & Tops'})">Tops & shirts</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Dresses'})">Dresses</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Pants'})">Pants & jeans</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Skirts'})">Skirts</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Coats & Jackets'})">Outerwear</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Activewear'})">Activewear</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Shirts & Tops'})">Tops & shirts</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Dresses'})">Dresses</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Pants'})">Pants & jeans</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Skirts'})">Skirts</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Coats & Jackets'})">Outerwear</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Activewear'})">Activewear</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">More</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Swimwear'})">Swimwear</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Jumpsuits & Rompers'})">Jumpsuits & rompers</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Outfit Sets'})">Outfit sets</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Shorts'})">Shorts</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Pajamas'})">Sleepwear</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Swimwear'})">Swimwear</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Jumpsuits & Rompers'})">Jumpsuits & rompers</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Outfit Sets'})">Outfit sets</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Shorts'})">Shorts</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Pajamas'})">Sleepwear</div>
       </div>
       <div class="mega-col">
-        <div class="mega-h">Shoes</div>
-        <div class="mega-link hot" onclick="megaFilter({gender:'female',cat:'Shoes'})">All women's shoes</div>
+        <div class="mega-h">Featured</div>
+        <div class="mega-link hot" onclick="megaFilter({gender:'female',ageGroup:'adult',minDiscount:70})">70%+ off women's</div>
+        <div class="mega-link hot" onclick="megaFilter({gender:'female',ageGroup:'adult',maxPrice:10})">Under $10</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult'})">All women's deals</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">Jewelry & accessories</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Jewelry Sets'})">Jewelry sets</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Earrings'})">Earrings</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Bracelets'})">Bracelets</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Hats'})">Hats</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Scarves'})">Scarves</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Jewelry Sets'})">Jewelry sets</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Earrings'})">Earrings</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Bracelets'})">Bracelets</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Hats'})">Hats</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Scarves'})">Scarves</div>
       </div>
     </div>
   </div>
@@ -298,20 +300,49 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
     <div class="mega-drop">
       <div class="mega-col">
         <div class="mega-h">Clothing</div>
-        <div class="mega-link" onclick="megaFilter({gender:'male',cat:'Shirts & Tops'})">Tops & shirts</div>
-        <div class="mega-link" onclick="megaFilter({gender:'male',cat:'Pants'})">Pants & jeans</div>
-        <div class="mega-link" onclick="megaFilter({gender:'male',cat:'Coats & Jackets'})">Outerwear</div>
-        <div class="mega-link" onclick="megaFilter({gender:'male',cat:'Activewear'})">Activewear</div>
-        <div class="mega-link" onclick="megaFilter({gender:'male',cat:'Shorts'})">Shorts</div>
-      </div>
-      <div class="mega-col">
-        <div class="mega-h">Shoes</div>
-        <div class="mega-link hot" onclick="megaFilter({gender:'male',cat:'Shoes'})">All men's shoes</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Shirts & Tops'})">Tops & shirts</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Pants'})">Pants & jeans</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Coats & Jackets'})">Outerwear</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Activewear'})">Activewear</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Shorts'})">Shorts</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">Featured</div>
-        <div class="mega-link hot" onclick="megaFilter({gender:'male',merchant:'Sullen Clothing'})">Sullen graphic tees</div>
-        <div class="mega-link hot" onclick="megaFilter({gender:'male',minDiscount:70})">70%+ off men's</div>
+        <div class="mega-link hot" onclick="megaFilter({gender:'male',ageGroup:'adult',merchant:'Sullen Clothing'})">Sullen graphic tees</div>
+        <div class="mega-link hot" onclick="megaFilter({gender:'male',ageGroup:'adult',minDiscount:70})">70%+ off men's</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'adult'})">All men's deals</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="meganav-item">Kids <span class="arr">&#9662;</span>
+    <div class="mega-drop">
+      <div class="mega-col">
+        <div class="mega-h">Girls</div>
+        <div class="mega-link hot" onclick="megaFilter({gender:'female',ageGroup:'kids'})">All girls</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'kids',cat:'Shirts & Tops'})">Tops</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'kids',cat:'Dresses'})">Dresses</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'kids',cat:'Pants'})">Pants</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'kids',cat:'Shoes'})">Shoes</div>
+      </div>
+      <div class="mega-col">
+        <div class="mega-h">Boys</div>
+        <div class="mega-link hot" onclick="megaFilter({gender:'male',ageGroup:'kids'})">All boys</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'kids',cat:'Shirts & Tops'})">Tops</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'kids',cat:'Pants'})">Pants</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'kids',cat:'Shoes'})">Shoes</div>
+      </div>
+      <div class="mega-col">
+        <div class="mega-h">Baby & toddler</div>
+        <div class="mega-link hot" onclick="megaFilter({ageGroup:'infant,toddler'})">All baby & toddler</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'infant,toddler'})">Baby girls</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'infant,toddler'})">Baby boys</div>
+      </div>
+      <div class="mega-col">
+        <div class="mega-h">Shop by deal</div>
+        <div class="mega-link hot" onclick="megaFilter({ageGroup:'kids,infant,toddler',maxPrice:5})">Under $5</div>
+        <div class="mega-link hot" onclick="megaFilter({ageGroup:'kids,infant,toddler',minDiscount:70})">70%+ off kids</div>
+        <div class="mega-link" onclick="megaFilter({ageGroup:'kids,infant,toddler'})">All kids deals</div>
       </div>
     </div>
   </div>
@@ -320,11 +351,15 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
     <div class="mega-drop">
       <div class="mega-col">
         <div class="mega-h">Women's shoes</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',cat:'Shoes'})">All women's shoes</div>
+        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Shoes'})">All women's shoes</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">Men's shoes</div>
-        <div class="mega-link" onclick="megaFilter({gender:'male',cat:'Shoes'})">All men's shoes</div>
+        <div class="mega-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Shoes'})">All men's shoes</div>
+      </div>
+      <div class="mega-col">
+        <div class="mega-h">Kids' shoes</div>
+        <div class="mega-link" onclick="megaFilter({ageGroup:'kids,infant,toddler',cat:'Shoes'})">All kids' shoes</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">Shop by deal</div>
@@ -388,23 +423,33 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
     <div class="mob-nav-sec">
       <div class="mob-nav-h" onclick="toggleMobSec(this)">Women <span class="arr">&#9662;</span></div>
       <div class="mob-nav-links">
-        <span class="mob-nav-link" onclick="megaFilter({gender:'female'});closeMobile()">All women's</span>
-        <span class="mob-nav-link" onclick="megaFilter({gender:'female',cat:'Shirts & Tops'});closeMobile()">Tops & shirts</span>
-        <span class="mob-nav-link" onclick="megaFilter({gender:'female',cat:'Dresses'});closeMobile()">Dresses</span>
-        <span class="mob-nav-link" onclick="megaFilter({gender:'female',cat:'Pants'});closeMobile()">Pants & jeans</span>
-        <span class="mob-nav-link" onclick="megaFilter({gender:'female',cat:'Shoes'});closeMobile()">Shoes</span>
-        <span class="mob-nav-link" onclick="megaFilter({gender:'female',cat:'Activewear'});closeMobile()">Activewear</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'female',ageGroup:'adult'});closeMobile()">All women's</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Shirts & Tops'});closeMobile()">Tops & shirts</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Dresses'});closeMobile()">Dresses</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Pants'});closeMobile()">Pants & jeans</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Shoes'});closeMobile()">Shoes</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Activewear'});closeMobile()">Activewear</span>
       </div>
     </div>
 
     <div class="mob-nav-sec">
       <div class="mob-nav-h" onclick="toggleMobSec(this)">Men <span class="arr">&#9662;</span></div>
       <div class="mob-nav-links">
-        <span class="mob-nav-link" onclick="megaFilter({gender:'male'});closeMobile()">All men's</span>
-        <span class="mob-nav-link" onclick="megaFilter({gender:'male',cat:'Shirts & Tops'});closeMobile()">Tops & shirts</span>
-        <span class="mob-nav-link" onclick="megaFilter({gender:'male',cat:'Pants'});closeMobile()">Pants & jeans</span>
-        <span class="mob-nav-link" onclick="megaFilter({gender:'male',cat:'Shoes'});closeMobile()">Shoes</span>
-        <span class="mob-nav-link hot" onclick="megaFilter({gender:'male',merchant:'Sullen Clothing'});closeMobile()">Sullen graphic tees</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'male',ageGroup:'adult'});closeMobile()">All men's</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Shirts & Tops'});closeMobile()">Tops & shirts</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Pants'});closeMobile()">Pants & jeans</span>
+        <span class="mob-nav-link" onclick="megaFilter({gender:'male',ageGroup:'adult',cat:'Shoes'});closeMobile()">Shoes</span>
+        <span class="mob-nav-link hot" onclick="megaFilter({gender:'male',ageGroup:'adult',merchant:'Sullen Clothing'});closeMobile()">Sullen graphic tees</span>
+      </div>
+    </div>
+
+    <div class="mob-nav-sec">
+      <div class="mob-nav-h" onclick="toggleMobSec(this)">Kids <span class="arr">&#9662;</span></div>
+      <div class="mob-nav-links">
+        <span class="mob-nav-link hot" onclick="megaFilter({gender:'female',ageGroup:'kids'});closeMobile()">Girls</span>
+        <span class="mob-nav-link hot" onclick="megaFilter({gender:'male',ageGroup:'kids'});closeMobile()">Boys</span>
+        <span class="mob-nav-link hot" onclick="megaFilter({ageGroup:'infant,toddler'});closeMobile()">Baby & toddler</span>
+        <span class="mob-nav-link" onclick="megaFilter({ageGroup:'kids,infant,toddler'});closeMobile()">All kids</span>
       </div>
     </div>
 
@@ -544,7 +589,7 @@ const TS_KEY='eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4';
 const COL='products';
 const PP=24;
 
-let S={q:'*',page:1,sort:'discount_percent:desc',cat:'',gender:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0};
+let S={q:'*',page:1,sort:'discount_percent:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0};
 
 const CAT_MAP={
 'Shirts & Tops':'Apparel & Accessories > Clothing > Shirts & Tops',
@@ -578,6 +623,7 @@ function megaFilter(opts){
   if(opts.merchant) S.merchant=opts.merchant;
   if(opts.minDiscount) S.minDisc=opts.minDiscount;
   if(opts.maxPrice) S.maxP=opts.maxPrice;
+  if(opts.ageGroup) S.ageGroup=opts.ageGroup;
   S.page=1;
   search();
 }
@@ -585,7 +631,7 @@ function megaFilter(opts){
 async function search(){
   showSkel();
   const f=buildFilter();
-  const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color,size',per_page:PP,page:S.page,sort_by:S.sort,group_by:'item_group_id',group_limit:'1',facet_by:'category,brand,merchant,color,size,gender',max_facet_values:'30'});
+  const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color,size',per_page:PP,page:S.page,sort_by:S.sort,group_by:'item_group_id',group_limit:'1',facet_by:'category,brand,merchant,color,size,gender,age_group',max_facet_values:'30'});
   if(f) p.set('filter_by',f);
   try{
     const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
@@ -602,6 +648,7 @@ function buildFilter(){
   if(S.minP>0) p.push(`sale_price:>=${S.minP}`);
   if(S.maxP>0) p.push(`sale_price:<=${S.maxP}`);
   if(S.gender) p.push(`gender:=${S.gender}`);
+  if(S.ageGroup) p.push(S.ageGroup.includes(',')?`age_group:=[${S.ageGroup}]`:`age_group:=${S.ageGroup}`);
   if(S.cat) p.push(`category:="${S.cat}"`);
   if(S.color) p.push(`color:="${S.color}"`);
   if(S.size) p.push(`size:="${S.size}"`);
@@ -681,8 +728,8 @@ function doSearch(){S.q=document.getElementById('search-input').value.trim()||'*
 function quickFilter(t){
   document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
   clearState();
-  if(t==='female'){S.gender='female';document.getElementById('chip-women').classList.add('on');}
-  else if(t==='male'){S.gender='male';document.getElementById('chip-men').classList.add('on');}
+  if(t==='female'){S.gender='female';S.ageGroup='adult';document.getElementById('chip-women').classList.add('on');}
+  else if(t==='male'){S.gender='male';S.ageGroup='adult';document.getElementById('chip-men').classList.add('on');}
   else if(t==='50'){S.minDisc=50;document.getElementById('chip-50').classList.add('on');}
   else if(t==='70'){S.minDisc=70;document.getElementById('chip-70').classList.add('on');}
   else if(t==='under10'){S.maxP=10;document.getElementById('chip-under10').classList.add('on');}
@@ -710,7 +757,7 @@ function syncMobile(){
 }
 function changeSort(){S.sort=document.getElementById('sort-sel').value;S.page=1;search();}
 function goPage(p){if(p<1)return;S.page=p;window.scrollTo({top:0,behavior:'smooth'});search();}
-function clearState(){S.gender='';S.cat='';S.minDisc=0;S.minP=0;S.maxP=0;S.color='';S.size='';S.merchant='';S.brand='';S.page=1;}
+function clearState(){S.gender='';S.cat='';S.ageGroup='';S.minDisc=0;S.minP=0;S.maxP=0;S.color='';S.size='';S.merchant='';S.brand='';S.page=1;}
 function clearAll(){
   clearState();S.q='*';
   document.getElementById('search-input').value='';
