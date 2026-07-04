@@ -546,10 +546,35 @@ const PP=24;
 
 let S={q:'*',page:1,sort:'discount_percent:desc',cat:'',gender:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0};
 
+const CAT_MAP={
+'Shirts & Tops':'Apparel & Accessories > Clothing > Shirts & Tops',
+'Dresses':'Apparel & Accessories > Clothing > Dresses',
+'Pants':'Apparel & Accessories > Clothing > Pants',
+'Skirts':'Apparel & Accessories > Clothing > Skirts',
+'Coats & Jackets':'Apparel & Accessories > Clothing > Outerwear > Coats & Jackets',
+'Activewear':'Apparel & Accessories > Clothing > Activewear',
+'Swimwear':'Apparel & Accessories > Clothing > Swimwear',
+'Jumpsuits & Rompers':'Apparel & Accessories > Clothing > One-Pieces > Jumpsuits & Rompers',
+'Outfit Sets':'Apparel & Accessories > Clothing > Outfit Sets',
+'Shorts':'Apparel & Accessories > Clothing > Shorts',
+'Pajamas':'Apparel & Accessories > Clothing > Sleepwear & Loungewear > Pajamas',
+'Shoes':'Apparel & Accessories > Shoes',
+'Uniforms':'Apparel & Accessories > Clothing > Uniforms > School Uniforms',
+'Jewelry Sets':'Apparel & Accessories > Jewelry > Jewelry Sets',
+'Earrings':'Apparel & Accessories > Jewelry > Earrings',
+'Bracelets':'Apparel & Accessories > Jewelry > Bracelets',
+'Rings':'Apparel & Accessories > Jewelry > Rings',
+'Necklaces':'Apparel & Accessories > Jewelry > Necklaces',
+'Hats':'Apparel & Accessories > Clothing Accessories > Hats',
+'Scarves':'Apparel & Accessories > Clothing Accessories > Scarves & Shawls',
+'Headbands':'Apparel & Accessories > Clothing Accessories > Hair Accessories > Headbands',
+'Gloves':'Apparel & Accessories > Clothing Accessories > Gloves & Mittens',
+};
+
 function megaFilter(opts){
   clearState();
   if(opts.gender) S.gender=opts.gender;
-  if(opts.cat) S.cat=opts.cat;
+  if(opts.cat) S.cat=CAT_MAP[opts.cat]||opts.cat;
   if(opts.merchant) S.merchant=opts.merchant;
   if(opts.minDiscount) S.minDisc=opts.minDiscount;
   if(opts.maxPrice) S.maxP=opts.maxPrice;
@@ -577,7 +602,7 @@ function buildFilter(){
   if(S.minP>0) p.push(`sale_price:>=${S.minP}`);
   if(S.maxP>0) p.push(`sale_price:<=${S.maxP}`);
   if(S.gender) p.push(`gender:=${S.gender}`);
-  if(S.cat) p.push(`category:=*${S.cat}*`);
+  if(S.cat) p.push(`category:="${S.cat}"`);
   if(S.color) p.push(`color:="${S.color}"`);
   if(S.size) p.push(`size:="${S.size}"`);
   if(S.merchant) p.push(`merchant:="${S.merchant}"`);
