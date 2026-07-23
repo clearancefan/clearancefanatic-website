@@ -250,7 +250,7 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
 
 <nav class="nav">
   <button class="hamburger" onclick="openMobile()">&#9776;</button>
-  <a href="/" class="nav-brand">Clearance Fanatic</a>
+  <a href="/" class="nav-brand"><img src="logo.png" alt="Clearance Fanatic" style="height:40px;width:auto;display:block;"></a>
   <div class="nav-group desktop">
     <span class="nav-link" onclick="megaFilter({})">Today's finds</span>
     <span class="nav-link" onclick="megaFilter({})">Brands</span>
@@ -631,7 +631,7 @@ function megaFilter(opts){
 async function search(){
   showSkel();
   const f=buildFilter();
-  const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color',per_page:PP,page:S.page,sort_by:S.sort,facet_by:'category,brand,merchant,color,size,gender,age_group',max_facet_values:'30'});
+  const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color,size',per_page:PP,page:S.page,sort_by:S.sort,group_by:'item_group_id',group_limit:'1',facet_by:'category,brand,merchant,color,size,gender,age_group',max_facet_values:'30'});
   if(f) p.set('filter_by',f);
   try{
     const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
@@ -651,7 +651,7 @@ function buildFilter(){
   if(S.ageGroup) p.push(S.ageGroup.includes(',')?`age_group:=[${S.ageGroup}]`:`age_group:=${S.ageGroup}`);
   if(S.cat) p.push(`category:="${S.cat}"`);
   if(S.color) p.push(`color:="${S.color}"`);
-  if(S.size) p.push(`size:=[${S.size}]`);
+  if(S.size) p.push(`size:="${S.size}"`);
   if(S.merchant) p.push(`merchant:="${S.merchant}"`);
   if(S.brand) p.push(`brand:="${S.brand}"`);
   return p.join(' && ');
@@ -659,10 +659,10 @@ function buildFilter(){
 
 function render(d){
   const g=document.getElementById('grid');
-  const groups=(d.hits||[]);
+  const groups=d.grouped_hits||[];
   if(!groups.length){g.innerHTML='<div class="empty-state"><div class="empty-icon">&#127991;</div><h3>No finds here</h3><p>Try adjusting your filters or search</p></div>';document.getElementById('paging').innerHTML='';return;}
   S.total=d.found||0;
-  g.innerHTML=groups.map(gr=>card(gr.document)).join('');
+  g.innerHTML=groups.map(gr=>card(gr.hits[0].document)).join('');
   renderPaging(d.found);
   const s=((S.page-1)*PP)+1,e=Math.min(S.page*PP,d.found_docs||d.found);
   document.getElementById('results-info').innerHTML=`Showing <b>${s.toLocaleString()}&ndash;${e.toLocaleString()}</b> of <b>${(d.found_docs||d.found).toLocaleString()}</b> clearance finds`;
@@ -670,7 +670,7 @@ function render(d){
 
 function card(d){
   const img=d.image_url?`<img src="${esc(d.image_url)}" alt="${esc(d.title)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=img-placeholder>&#127991;</div>'">`:`<div class="img-placeholder">&#127991;</div>`;
-  const sizeDisplay=Array.isArray(d.size)&&d.size.length?d.size.slice(0,3).join(', '):d.size||'';const tags=[d.color,sizeDisplay].filter(Boolean).slice(0,2).map(t=>`<span class="card-tag">${esc(t)}</span>`).join('');
+  const tags=[d.color,d.size].filter(Boolean).slice(0,2).map(t=>`<span class="card-tag">${esc(t)}</span>`).join('');
   const br=d.brand&&d.brand!==d.merchant?`<div class="card-brand">${esc(d.brand)}</div>`:'';
   return `<a class="card" href="${esc(d.product_url)}" target="_blank" rel="noopener noreferrer"><div class="card-img">${img}<div class="badge">${d.discount_percent}% off</div><div class="merch-tag">${esc(d.merchant||'')}</div></div><div class="card-body">${br}<div class="card-title">${esc(d.title)}</div>${tags?`<div class="card-meta">${tags}</div>`:''}<div class="card-prices"><span class="card-sale">$${Number(d.sale_price).toFixed(2)}</span><span class="card-orig">$${Number(d.price).toFixed(2)}</span></div></div><div class="card-btn">Shop this find</div></a>`;
 }
