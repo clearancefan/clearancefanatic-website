@@ -631,15 +631,16 @@ function megaFilter(opts){
 async function search(){
   showSkel();
   const f=buildFilter();
-  const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color,size',per_page:PP,page:S.page,sort_by:S.sort,group_by:'item_group_id',group_limit:'1',facet_by:'category,brand,merchant,color,size,gender,age_group',max_facet_values:'30'});
+  const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color',per_page:PP,page:S.page,sort_by:S.sort,facet_by:'category,brand,merchant,color,size,gender,age_group,discount_percent',max_facet_values:'30'});
   if(f) p.set('filter_by',f);
   try{
     const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
+    if(!r.ok){const err=await r.text();console.error('Typesense error:',r.status,err);showErr();return;}
     const d=await r.json();
     render(d);
     renderFacets(d.facet_counts);
     updateStats(d);
-  }catch(e){showErr();}
+  }catch(e){console.error('Search failed:',e);showErr();}
 }
 
 function buildFilter(){
@@ -650,8 +651,13 @@ function buildFilter(){
   if(S.gender) p.push(`gender:=${S.gender}`);
   if(S.ageGroup) p.push(S.ageGroup.includes(',')?`age_group:=[${S.ageGroup}]`:`age_group:=${S.ageGroup}`);
   if(S.cat) p.push(`category:="${S.cat}"`);
-  if(S.color) p.push(`color:="${S.color}"`);
-  if(S.size) p.push(`size:="${S.size}"`);
+  if(S.color){
+    const cl=S.color.toLowerCase();
+    const cu=S.color.toUpperCase();
+    const ct=S.color.charAt(0).toUpperCase()+S.color.slice(1).toLowerCase();
+    p.push(`color:=[${cl},${cu},${ct}]`);
+  }
+  if(S.size) p.push(`size:=${S.size}`);
   if(S.merchant) p.push(`merchant:="${S.merchant}"`);
   if(S.brand) p.push(`brand:="${S.brand}"`);
   return p.join(' && ');
@@ -659,18 +665,19 @@ function buildFilter(){
 
 function render(d){
   const g=document.getElementById('grid');
-  const groups=d.grouped_hits||[];
-  if(!groups.length){g.innerHTML='<div class="empty-state"><div class="empty-icon">&#127991;</div><h3>No finds here</h3><p>Try adjusting your filters or search</p></div>';document.getElementById('paging').innerHTML='';return;}
+  const hits=d.hits||[];
+  if(!hits.length){g.innerHTML='<div class="empty-state"><div class="empty-icon">&#127991;</div><h3>No finds here</h3><p>Try adjusting your filters or search</p></div>';document.getElementById('paging').innerHTML='';return;}
   S.total=d.found||0;
-  g.innerHTML=groups.map(gr=>card(gr.hits[0].document)).join('');
+  g.innerHTML=hits.map(h=>card(h.document)).join('');
   renderPaging(d.found);
-  const s=((S.page-1)*PP)+1,e=Math.min(S.page*PP,d.found_docs||d.found);
-  document.getElementById('results-info').innerHTML=`Showing <b>${s.toLocaleString()}&ndash;${e.toLocaleString()}</b> of <b>${(d.found_docs||d.found).toLocaleString()}</b> clearance finds`;
+  const s=((S.page-1)*PP)+1,e=Math.min(S.page*PP,d.found);
+  document.getElementById('results-info').innerHTML=`Showing <b>${s.toLocaleString()}&ndash;${e.toLocaleString()}</b> of <b>${d.found.toLocaleString()}</b> clearance finds`;
 }
 
 function card(d){
   const img=d.image_url?`<img src="${esc(d.image_url)}" alt="${esc(d.title)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=img-placeholder>&#127991;</div>'">`:`<div class="img-placeholder">&#127991;</div>`;
-  const tags=[d.color,d.size].filter(Boolean).slice(0,2).map(t=>`<span class="card-tag">${esc(t)}</span>`).join('');
+  const sizeStr = Array.isArray(d.size) ? d.size.slice(0,3).join(', ') : (d.size||'');
+  const tags=[d.color,sizeStr].filter(Boolean).slice(0,2).map(t=>`<span class="card-tag">${esc(t)}</span>`).join('');
   const br=d.brand&&d.brand!==d.merchant?`<div class="card-brand">${esc(d.brand)}</div>`:'';
   return `<a class="card" href="${esc(d.product_url)}" target="_blank" rel="noopener noreferrer"><div class="card-img">${img}<div class="badge">${d.discount_percent}% off</div><div class="merch-tag">${esc(d.merchant||'')}</div></div><div class="card-body">${br}<div class="card-title">${esc(d.title)}</div>${tags?`<div class="card-meta">${tags}</div>`:''}<div class="card-prices"><span class="card-sale">$${Number(d.sale_price).toFixed(2)}</span><span class="card-orig">$${Number(d.price).toFixed(2)}</span></div></div><div class="card-btn">Shop this find</div></a>`;
 }
@@ -704,7 +711,21 @@ function renderFacets(facets){
       document.getElementById('brand-list').innerHTML=bh;
       document.getElementById('mob-brand-list').innerHTML=bh.replace(/filterFacet\(/g,'mobFacet(');
     }
-    if(f.field_name==='color'){document.getElementById('color-list').innerHTML=f.counts.slice(0,12).map(c=>`<div class="check-item"><input type="checkbox" ${S.color===c.value?'checked':''} onchange="filterFacet('color','${escJs(c.value)}',this.checked)"> ${esc(c.value)} <span style="font-size:10px;color:rgba(42,42,40,0.22);margin-left:auto">${c.count}</span></div>`).join('');}
+    if(f.field_name==='color'){
+      // Merge case variations (BLACK, Black, black → Black)
+      const colorMap={};
+      f.counts.forEach(c=>{
+        const normalized=c.value.charAt(0).toUpperCase()+c.value.slice(1).toLowerCase();
+        if(colorMap[normalized]) colorMap[normalized].count+=c.count;
+        else colorMap[normalized]={value:c.value,display:normalized,count:c.count};
+      });
+      const merged=Object.values(colorMap).sort((a,b)=>b.count-a.count);
+      document.getElementById('color-list').innerHTML=merged.slice(0,12).map(c=>`
+        <div class="check-item"><input type="checkbox" ${S.color===c.value?'checked':''}
+          onchange="filterColor('${escJs(c.display)}',this.checked)">
+          ${esc(c.display)} <span style="font-size:10px;color:rgba(42,42,40,0.22);margin-left:auto">${c.count}</span>
+        </div>`).join('');
+    }
     if(f.field_name==='size'){document.getElementById('size-list').innerHTML=f.counts.slice(0,15).map(c=>`<div class="check-item"><input type="checkbox" ${S.size===c.value?'checked':''} onchange="filterFacet('size','${escJs(c.value)}',this.checked)"> ${esc(c.value)} <span style="font-size:10px;color:rgba(42,42,40,0.22);margin-left:auto">${c.count}</span></div>`).join('');}
     if(f.field_name==='merchant'){
       const mh=f.counts.map(c=>`<div class="check-item"><input type="checkbox" ${S.merchant===c.value?'checked':''} onchange="filterFacet('merchant','${escJs(c.value)}',this.checked)"> ${esc(c.value)} <span style="font-size:10px;color:rgba(42,42,40,0.22);margin-left:auto">${c.count}</span></div>`).join('');
@@ -738,6 +759,10 @@ function quickFilter(t){
 }
 function filterCat(v){S.cat=v;S.page=1;search();}
 function filterFacet(field,val,on){S[field]=on?val:'';S.page=1;search();}
+function filterColor(val,on){
+  // Store the display value for checkbox state, but filter will match all case variants
+  S.color=on?val:'';S.colorDisplay=on?val:'';S.page=1;search();
+}
 function mobFacet(field,val,on){filterFacet(field,val,on);}
 function applyFilters(){
   S.minP=parseFloat(document.getElementById('price-min').value)||0;
