@@ -394,14 +394,17 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
       <div class="mega-col">
         <div class="mega-h">Shop by category</div>
         <div class="mega-link" onclick="megaFilter({cat:'Home & Garden'})">All Home &amp; Garden</div>
-        <div class="mega-link" onclick="megaFilter({cat:'Furniture'})">Furniture</div>
-        <div class="mega-link" onclick="megaFilter({cat:'Home'})">Home</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Home & Garden',q:'rug'})">Rugs</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Home & Garden',q:'bedding'})">Bedding</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Home & Garden',q:'kitchen dining'})">Kitchen &amp; Dining</div>
+        <div class="mega-link" onclick="megaFilter({q:'sofa sectional'})">Sofas &amp; Sectionals</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Furniture'})">All Furniture</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">Shop by brand</div>
         <div class="mega-link" onclick="megaFilter({merchant:'KitchenAid Major Appliances'})">KitchenAid</div>
         <div class="mega-link" onclick="megaFilter({merchant:'Whirlpool USA'})">Whirlpool</div>
-        <div class="mega-link" onclick="megaFilter({merchant:\"Bloomingdale's\"})">Bloomingdale's Home</div>
+        <div class="mega-link" onclick="megaFilter({merchant:'Bloomingdale\'s'})">Bloomingdale's Home</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">Featured</div>
@@ -479,8 +482,11 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
       <div class="mob-nav-h" onclick="toggleMobSec(this)">Home &amp; Garden <span class="arr">&#9662;</span></div>
       <div class="mob-nav-links">
         <span class="mob-nav-link" onclick="megaFilter({cat:'Home & Garden'});closeMobile()">All Home &amp; Garden</span>
-        <span class="mob-nav-link" onclick="megaFilter({cat:'Furniture'});closeMobile()">Furniture</span>
-        <span class="mob-nav-link" onclick="megaFilter({cat:'Home'});closeMobile()">Home</span>
+        <span class="mob-nav-link" onclick="megaFilter({cat:'Home & Garden',q:'rug'});closeMobile()">Rugs</span>
+        <span class="mob-nav-link" onclick="megaFilter({cat:'Home & Garden',q:'bedding'});closeMobile()">Bedding</span>
+        <span class="mob-nav-link" onclick="megaFilter({cat:'Home & Garden',q:'kitchen dining'});closeMobile()">Kitchen &amp; Dining</span>
+        <span class="mob-nav-link" onclick="megaFilter({q:'sofa sectional'});closeMobile()">Sofas &amp; Sectionals</span>
+        <span class="mob-nav-link" onclick="megaFilter({cat:'Furniture'});closeMobile()">All Furniture</span>
         <span class="mob-nav-link" onclick="megaFilter({merchant:'KitchenAid Major Appliances'});closeMobile()">KitchenAid</span>
         <span class="mob-nav-link" onclick="megaFilter({merchant:'Whirlpool USA'});closeMobile()">Whirlpool</span>
       </div>
@@ -655,6 +661,9 @@ const CAT_MAP={
 
 function megaFilter(opts){
   clearState();
+  S.q = opts.q || '*';
+  const si = document.getElementById('search-input');
+  if(si) si.value = opts.q || '';
   if(opts.gender) S.gender=opts.gender;
   if(opts.cat) S.cat=CAT_MAP[opts.cat]||opts.cat;
   if(opts.merchant) S.merchant=opts.merchant;
