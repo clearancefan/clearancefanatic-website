@@ -389,6 +389,28 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
     </div>
   </div>
 
+  <div class="meganav-item">Home &amp; Garden <span class="arr">&#9662;</span>
+    <div class="mega-drop">
+      <div class="mega-col">
+        <div class="mega-h">Shop by category</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Home & Garden'})">All Home &amp; Garden</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Furniture'})">Furniture</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Home'})">Home</div>
+      </div>
+      <div class="mega-col">
+        <div class="mega-h">Shop by brand</div>
+        <div class="mega-link" onclick="megaFilter({merchant:'KitchenAid Major Appliances'})">KitchenAid</div>
+        <div class="mega-link" onclick="megaFilter({merchant:'Whirlpool USA'})">Whirlpool</div>
+        <div class="mega-link" onclick="megaFilter({merchant:\"Bloomingdale's\"})">Bloomingdale's Home</div>
+      </div>
+      <div class="mega-col">
+        <div class="mega-h">Featured</div>
+        <div class="mega-link hot" onclick="megaFilter({cat:'Home & Garden',minDiscount:70})">70%+ off home</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Home & Garden'})">All home &amp; garden deals</div>
+      </div>
+    </div>
+  </div>
+
   <div class="meganav-item highlight">The Deals <span class="arr">&#9662;</span>
     <div class="mega-drop">
       <div class="mega-col">
@@ -454,6 +476,17 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
     </div>
 
     <div class="mob-nav-sec">
+      <div class="mob-nav-h" onclick="toggleMobSec(this)">Home &amp; Garden <span class="arr">&#9662;</span></div>
+      <div class="mob-nav-links">
+        <span class="mob-nav-link" onclick="megaFilter({cat:'Home & Garden'});closeMobile()">All Home &amp; Garden</span>
+        <span class="mob-nav-link" onclick="megaFilter({cat:'Furniture'});closeMobile()">Furniture</span>
+        <span class="mob-nav-link" onclick="megaFilter({cat:'Home'});closeMobile()">Home</span>
+        <span class="mob-nav-link" onclick="megaFilter({merchant:'KitchenAid Major Appliances'});closeMobile()">KitchenAid</span>
+        <span class="mob-nav-link" onclick="megaFilter({merchant:'Whirlpool USA'});closeMobile()">Whirlpool</span>
+      </div>
+    </div>
+
+    <div class="mob-nav-sec">
       <div class="mob-nav-h" onclick="toggleMobSec(this)">The Deals <span class="arr">&#9662;</span></div>
       <div class="mob-nav-links">
         <span class="mob-nav-link hot" onclick="megaFilter({minDiscount:80});closeMobile()">80%+ off</span>
@@ -477,10 +510,12 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
       <div class="check-item"><input type="checkbox" id="mob-disc-70" onchange="syncMobile()"> 70%+ off</div>
       <div class="check-item"><input type="checkbox" id="mob-disc-80" onchange="syncMobile()"> 80%+ off</div>
     </div>
-    <div class="sb-sec">
-      <div class="sb-h">Gender</div>
-      <div class="check-item"><input type="checkbox" id="mob-gen-f" onchange="syncMobile()"> Women</div>
-      <div class="check-item"><input type="checkbox" id="mob-gen-m" onchange="syncMobile()"> Men</div>
+    <div id="apparel-filters-mobile">
+      <div class="sb-sec">
+        <div class="sb-h">Gender</div>
+        <div class="check-item"><input type="checkbox" id="mob-gen-f" onchange="syncMobile()"> Women</div>
+        <div class="check-item"><input type="checkbox" id="mob-gen-m" onchange="syncMobile()"> Men</div>
+      </div>
     </div>
     <div class="sb-sec">
       <div class="sb-h">Merchant</div>
@@ -541,13 +576,15 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
       </div>
       <button class="price-apply" onclick="applyFilters()">Apply</button>
     </div>
-    <div class="sb-sec">
-      <div class="sb-h">Gender</div>
-      <div class="check-item"><input type="checkbox" id="gen-f" onchange="applyFilters()"> Women</div>
-      <div class="check-item"><input type="checkbox" id="gen-m" onchange="applyFilters()"> Men</div>
+    <div id="apparel-filters-desktop">
+      <div class="sb-sec">
+        <div class="sb-h">Gender</div>
+        <div class="check-item"><input type="checkbox" id="gen-f" onchange="applyFilters()"> Women</div>
+        <div class="check-item"><input type="checkbox" id="gen-m" onchange="applyFilters()"> Men</div>
+      </div>
+      <div class="sb-sec"><div class="sb-h">Color</div><div id="color-list"></div></div>
+      <div class="sb-sec"><div class="sb-h">Size</div><div id="size-list"></div></div>
     </div>
-    <div class="sb-sec"><div class="sb-h">Color</div><div id="color-list"></div></div>
-    <div class="sb-sec"><div class="sb-h">Size</div><div id="size-list"></div></div>
     <div class="sb-sec"><div class="sb-h">Merchant</div><div id="merch-list"></div></div>
     <button class="clear-btn" onclick="clearAll()">Clear all filters</button>
   </aside>
@@ -628,8 +665,20 @@ function megaFilter(opts){
   search();
 }
 
+function isApparelCategory(cat){
+  return cat === '' || cat.startsWith('Apparel & Accessories');
+}
+function updateFilterVisibility(){
+  const show = isApparelCategory(S.cat) ? '' : 'none';
+  const d = document.getElementById('apparel-filters-desktop');
+  const m = document.getElementById('apparel-filters-mobile');
+  if(d) d.style.display = show;
+  if(m) m.style.display = show;
+}
+
 async function search(){
   showSkel();
+  updateFilterVisibility();
   const f=buildFilter();
   const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color',per_page:PP,page:S.page,sort_by:S.sort,facet_by:'category,brand,merchant,color,size,gender,age_group,discount_percent',max_facet_values:'30'});
   if(f) p.set('filter_by',f);
