@@ -733,7 +733,7 @@ function render(d){
 }
 
 function card(d){
-  const img=d.image_url?`<img src="${esc(d.image_url)}" alt="${esc(d.title)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=img-placeholder>&#127991;</div>'">`:`<div class="img-placeholder">&#127991;</div>`;
+  const img=d.image_url?`<img src="${esc(d.image_url)}" alt="${esc(d.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<div class=img-placeholder>&#127991;</div>'">`:`<div class="img-placeholder">&#127991;</div>`;
   const sizeStr = Array.isArray(d.size) ? d.size.slice(0,3).join(', ') : (d.size||'');
   const tags=[d.color,sizeStr].filter(Boolean).slice(0,2).map(t=>`<span class="card-tag">${esc(t)}</span>`).join('');
   const br=d.brand&&d.brand!==d.merchant?`<div class="card-brand">${esc(d.brand)}</div>`:'';
