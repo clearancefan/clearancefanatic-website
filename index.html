@@ -287,7 +287,6 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
       </div>
       <div class="mega-col">
         <div class="mega-h">Jewelry & accessories</div>
-        <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Jewelry Sets'})">Jewelry sets</div>
         <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Earrings'})">Earrings</div>
         <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Bracelets'})">Bracelets</div>
         <div class="mega-link" onclick="megaFilter({gender:'female',ageGroup:'adult',cat:'Hats'})">Hats</div>
@@ -366,6 +365,14 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
         <div class="mega-link hot" onclick="megaFilter({cat:'Shoes',maxPrice:10})">Under $10</div>
         <div class="mega-link hot" onclick="megaFilter({cat:'Shoes',minDiscount:70})">70%+ off shoes</div>
       </div>
+      <div class="mega-col">
+        <div class="mega-h">Shop by brand</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Shoes',brand:'Nike'})">Nike</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Shoes',brand:'Tory Burch'})">Tory Burch</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Shoes',brand:'Stuart Weitzman'})">Stuart Weitzman</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Shoes',brand:'Michael Kors'})">Michael Kors</div>
+        <div class="mega-link" onclick="megaFilter({cat:'Shoes',brand:'Sam Edelman'})">Sam Edelman</div>
+      </div>
     </div>
   </div>
 
@@ -373,7 +380,6 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
     <div class="mega-drop">
       <div class="mega-col">
         <div class="mega-h">Jewelry</div>
-        <div class="mega-link" onclick="megaFilter({cat:'Jewelry Sets'})">Jewelry sets</div>
         <div class="mega-link" onclick="megaFilter({cat:'Earrings'})">Earrings</div>
         <div class="mega-link" onclick="megaFilter({cat:'Bracelets'})">Bracelets</div>
         <div class="mega-link" onclick="megaFilter({cat:'Rings'})">Rings</div>
@@ -402,9 +408,9 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
       </div>
       <div class="mega-col">
         <div class="mega-h">Shop by brand</div>
-        <div class="mega-link" onclick="megaFilter({merchant:'KitchenAid Major Appliances'})">KitchenAid</div>
+        <div class="mega-link" onclick="megaFilter({brand:'Kitchenaid'})">KitchenAid</div>
         <div class="mega-link" onclick="megaFilter({merchant:'Whirlpool USA'})">Whirlpool</div>
-        <div class="mega-link" onclick="megaFilter({merchant:'Bloomingdale\'s'})">Bloomingdale's Home</div>
+        <div class="mega-link" onclick="megaFilter({merchant:'Bloomingdale\'s',cat:'Home & Garden,Furniture,Home'})">Bloomingdale's Home</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">Featured</div>
@@ -430,8 +436,10 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
       </div>
       <div class="mega-col">
         <div class="mega-h">By brand</div>
-        <div class="mega-link" onclick="megaFilter({merchant:'Rainbow Shops'})">Rainbow Shops</div>
-        <div class="mega-link" onclick="megaFilter({merchant:'Sullen Clothing'})">Sullen Clothing</div>
+        <div class="mega-link" onclick="megaFilter({brand:'Ted Baker'})">Ted Baker</div>
+        <div class="mega-link" onclick="megaFilter({brand:'Allsaints'})">Allsaints</div>
+        <div class="mega-link" onclick="megaFilter({brand:'Polo Ralph Lauren'})">Polo Ralph Lauren</div>
+        <div class="mega-link" onclick="megaFilter({brand:'Theory'})">Theory</div>
       </div>
     </div>
   </div>
@@ -487,7 +495,7 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
         <span class="mob-nav-link" onclick="megaFilter({cat:'Home & Garden',q:'kitchen dining'});closeMobile()">Kitchen &amp; Dining</span>
         <span class="mob-nav-link" onclick="megaFilter({q:'sofa sectional'});closeMobile()">Sofas &amp; Sectionals</span>
         <span class="mob-nav-link" onclick="megaFilter({cat:'Furniture'});closeMobile()">All Furniture</span>
-        <span class="mob-nav-link" onclick="megaFilter({merchant:'KitchenAid Major Appliances'});closeMobile()">KitchenAid</span>
+        <span class="mob-nav-link" onclick="megaFilter({brand:'Kitchenaid'});closeMobile()">KitchenAid</span>
         <span class="mob-nav-link" onclick="megaFilter({merchant:'Whirlpool USA'});closeMobile()">Whirlpool</span>
       </div>
     </div>
@@ -667,6 +675,7 @@ function megaFilter(opts){
   if(opts.gender) S.gender=opts.gender;
   if(opts.cat) S.cat=CAT_MAP[opts.cat]||opts.cat;
   if(opts.merchant) S.merchant=opts.merchant;
+  if(opts.brand) S.brand=opts.brand;
   if(opts.minDiscount) S.minDisc=opts.minDiscount;
   if(opts.maxPrice) S.maxP=opts.maxPrice;
   if(opts.ageGroup) S.ageGroup=opts.ageGroup;
@@ -708,7 +717,7 @@ function buildFilter(){
   if(S.maxP>0) p.push(`sale_price:<=${S.maxP}`);
   if(S.gender) p.push(`gender:=${S.gender}`);
   if(S.ageGroup) p.push(S.ageGroup.includes(',')?`age_group:=[${S.ageGroup}]`:`age_group:=${S.ageGroup}`);
-  if(S.cat) p.push(`category:="${S.cat}"`);
+  if(S.cat) p.push(S.cat.includes(',')?`category:=[${S.cat}]`:`category:="${S.cat}"`);
   if(S.color){
     const cl=S.color.toLowerCase();
     const cu=S.color.toUpperCase();
