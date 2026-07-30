@@ -411,7 +411,7 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
         <div class="mega-h">Shop by brand</div>
         <div class="mega-link" onclick="megaFilter({brand:'Kitchenaid'})">KitchenAid</div>
         <div class="mega-link" onclick="megaFilter({merchant:'Whirlpool USA'})">Whirlpool</div>
-        <div class="mega-link" onclick="megaFilter({merchant:'Bloomingdale\'s',cat:'Home & Garden,Furniture,Home'})">Bloomingdale's Home</div>
+        <div class="mega-link" onclick="megaFilter({merchant:'Bloomingdale\'s',cat:'Home & Garden||Furniture||Home'})">Bloomingdale's Home</div>
       </div>
       <div class="mega-col">
         <div class="mega-h">Featured</div>
@@ -667,7 +667,6 @@ const CAT_MAP={
 'Scarves':'Apparel & Accessories > Clothing Accessories > Scarves & Shawls',
 'Headbands':'Apparel & Accessories > Clothing Accessories > Hair Accessories > Headbands',
 'Gloves':'Apparel & Accessories > Clothing Accessories > Gloves & Mittens',
-'Gloves':'Apparel & Accessories > Clothing Accessories > Gloves & Mittens',
 };
 
 function megaFilter(opts){
@@ -720,7 +719,7 @@ function buildFilter(){
   if(S.maxP>0) p.push(`sale_price:<=${S.maxP}`);
   if(S.gender) p.push(`gender:=${S.gender}`);
   if(S.ageGroup) p.push(S.ageGroup.includes(',')?`age_group:=[${S.ageGroup}]`:`age_group:=${S.ageGroup}`);
-  if(S.cat) p.push(S.cat.includes(',')?`category:=[${S.cat}]`:`category:="${S.cat}"`);
+  if(S.cat) p.push(S.cat.includes('||')?`category:=[${S.cat.split('||').join(',')}]`:`category:="${S.cat}"`);
   if(S.color){
     const cl=S.color.toLowerCase();
     const cu=S.color.toUpperCase();
