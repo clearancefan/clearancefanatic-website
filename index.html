@@ -47,8 +47,8 @@ button { font-family: var(--sans); }
 .topbar-msg b { color: var(--gold); font-weight: 500; }
 
 /* NAV */
-.nav { display: flex; justify-content: space-between; align-items: center; padding: 0 28px; height: 90px; border-bottom: var(--border); position: sticky; top: 0; z-index: 100; background: var(--cream); }
-.nav-brand { font-family: var(--serif); font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--charcoal); }
+.nav { display: flex; justify-content: space-between; align-items: center; padding: 0 28px; height: 104px; border-bottom: var(--border); position: sticky; top: 0; z-index: 100; background: var(--cream); }
+.nav-brand { font-family: var(--serif); font-size: 15px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--charcoal); position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
 .nav-group { display: flex; align-items: center; gap: 18px; }
 .nav-link { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); cursor: pointer; transition: color 0.15s; }
 .nav-link:hover { color: var(--terra); }
@@ -111,7 +111,7 @@ button { font-family: var(--sans); }
 .layout { display: flex; max-width: 1400px; margin: 0 auto; min-height: calc(100vh - 200px); }
 
 /* SIDEBAR */
-.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); border-right: var(--border); padding: 18px 14px; position: sticky; top: 90px; height: calc(100vh - 90px); overflow-y: auto; background: var(--cream); }
+.sidebar { width: var(--sidebar-w); min-width: var(--sidebar-w); border-right: var(--border); padding: 18px 14px; position: sticky; top: 104px; height: calc(100vh - 104px); overflow-y: auto; background: var(--cream); }
 .sidebar::-webkit-scrollbar { width: 3px; }
 .sidebar::-webkit-scrollbar-thumb { background: rgba(42,42,40,0.12); border-radius: 2px; }
 .sb-sec { margin-bottom: 20px; }
@@ -250,7 +250,7 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
 
 <nav class="nav">
   <button class="hamburger" onclick="openMobile()">&#9776;</button>
-  <a href="/" class="nav-brand"><img src="logo.png" alt="Clearance Fanatic" style="height:80px;width:auto;display:block;"></a>
+  <a href="/" class="nav-brand"><img src="logo.png" alt="Clearance Fanatic" style="height:96px;width:auto;display:block;"></a>
   <div class="nav-group desktop"></div>
   <button class="hamburger" onclick="openMobile()" style="visibility:hidden">&#9776;</button>
 </nav>
