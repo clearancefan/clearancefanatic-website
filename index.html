@@ -866,7 +866,7 @@ function toggleMobSec(el){el.classList.toggle('expanded');el.nextElementSibling.
 
 // UTILS
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function escJs(s){return String(s||'').replace(/'/g,"\\'").replace(/\\/g,'\\\\');}
+function escJs(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
 document.getElementById('search-input').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
 
 // COOKIES
