@@ -274,10 +274,10 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
 <nav class="nav">
   <button class="hamburger" onclick="openMobile()">&#9776;</button>
   <a href="/" class="nav-brand"><img src="logo.png" alt="Clearance Fanatic" style="height:96px;width:auto;display:block;"></a>
+  <button class="hamburger" onclick="openMobile()" style="visibility:hidden">&#9776;</button>
   <div class="nav-group desktop">
     <span class="nav-link" onclick="openSaved()">&#9825; Saved <span id="saved-count">(0)</span></span>
   </div>
-  <button class="hamburger" onclick="openMobile()" style="visibility:hidden">&#9776;</button>
 </nav>
 
 <div class="meganav">
@@ -810,12 +810,13 @@ function renderFacets(facets){
   facets.forEach(f=>{
     if(f.field_name==='category'){
       const ac=S.cat===''?'on':'';
+      const catSel=S.cat?S.cat.split('||'):[];
       let h=`<div class="sb-item ${ac}" onclick="filterCat('')">All <span class="sb-ct">${S.total.toLocaleString()}</span></div>`;
-      f.counts.slice(0,12).forEach(c=>{const a=S.cat&&c.value.includes(S.cat)?'on':'';const l=c.value.split('>').pop().trim();h+=`<div class="sb-item ${a}" onclick="filterCat('${escJs(c.value)}')">${esc(l)} <span class="sb-ct">${c.count.toLocaleString()}</span></div>`;});
+      f.counts.slice(0,12).forEach(c=>{const a=catSel.includes(c.value)?'on':'';const l=c.value.split('>').pop().trim();h+=`<div class="sb-item ${a}" onclick="filterCat('${escJs(c.value)}')">${esc(l)} <span class="sb-ct">${c.count.toLocaleString()}</span></div>`;});
       document.getElementById('cat-list').innerHTML=h;
       // mobile mirror
       let mh=`<div class="sb-item ${ac}" onclick="filterCat('');closeMobile()">All <span class="sb-ct">${S.total.toLocaleString()}</span></div>`;
-      f.counts.slice(0,10).forEach(c=>{const a=S.cat&&c.value.includes(S.cat)?'on':'';const l=c.value.split('>').pop().trim();mh+=`<div class="sb-item ${a}" onclick="filterCat('${escJs(c.value)}');closeMobile()">${esc(l)} <span class="sb-ct">${c.count.toLocaleString()}</span></div>`;});
+      f.counts.slice(0,10).forEach(c=>{const a=catSel.includes(c.value)?'on':'';const l=c.value.split('>').pop().trim();mh+=`<div class="sb-item ${a}" onclick="filterCat('${escJs(c.value)}');closeMobile()">${esc(l)} <span class="sb-ct">${c.count.toLocaleString()}</span></div>`;});
       document.getElementById('mob-cat-list').innerHTML=mh;
     }
     if(f.field_name==='brand'){
