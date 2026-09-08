@@ -932,9 +932,12 @@ async function checkSpotlight(){
   const pid=params.get('p');
   if(!pid) return;
   try{
-    const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/${encodeURIComponent(pid)}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
-    if(!r.ok){return;} // product gone/expired — just show the normal grid beneath
-    const d=await r.json();
+    const p=new URLSearchParams({q:'*',query_by:'title',filter_by:`id:=${pid}`,per_page:1});
+    const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
+    if(!r.ok){console.error('Spotlight lookup failed:',r.status,await r.text());return;} // product gone/expired — just show the normal grid beneath
+    const data=await r.json();
+    if(!data.hits||!data.hits.length){return;}
+    const d=data.hits[0].document;
     PRODUCTS[d.id]=d;
     renderSpotlight(d);
     document.title=`${d.title} — Clearance Fanatic`;
