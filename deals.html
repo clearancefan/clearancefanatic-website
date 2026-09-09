@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's Top Deals — Clearance Fanatic</title>
+<meta name="description" content="Today's best clearance finds from Clearance Fanatic — one site, every retailer, only clearance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF7F2;
+  --charcoal: #2A2A28;
+  --terra: #C4613C;
+  --terra-dark: #A8512F;
+  --terra-light: rgba(196,97,60,0.06);
+  --teal: #2A6B5E;
+  --gold: #E8C06A;
+  --muted: rgba(42,42,40,0.45);
+  --faint: rgba(42,42,40,0.12);
+  --faint2: rgba(42,42,40,0.06);
+  --border: 0.5px solid rgba(42,42,40,0.12);
+  --card-bg: #fff;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --radius: 6px;
+  --radius-lg: 8px;
+  --shadow-card: 0 6px 20px rgba(0,0,0,0.06);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--cream); color: var(--charcoal); min-height: 100vh; }
+
+.head { text-align: center; padding: 36px 20px 24px; border-bottom: var(--border); }
+.head .live { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+.live-dot { width: 7px; height: 7px; background: var(--terra); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+.live-text { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); font-weight: 500; }
+.head h1 { font-family: var(--serif); font-size: 30px; font-weight: 400; color: var(--charcoal); margin-bottom: 6px; }
+.head p { font-size: 13px; color: var(--muted); }
+
+.wrap { max-width: 480px; margin: 0 auto; padding: 20px 16px 60px; }
+
+.deal-card { display: flex; gap: 12px; background: var(--card-bg); border: var(--border); border-radius: var(--radius-lg); padding: 10px; margin-bottom: 12px; text-decoration: none; color: inherit; box-shadow: var(--shadow-card); transition: transform 0.1s; }
+.deal-card:active { transform: scale(0.98); }
+.deal-img { width: 88px; height: 88px; border-radius: var(--radius); object-fit: cover; background: var(--faint2); flex-shrink: 0; }
+.deal-img-placeholder { width: 88px; height: 88px; border-radius: var(--radius); background: var(--faint2); display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+.deal-body { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.deal-merch { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal); font-weight: 600; margin-bottom: 3px; }
+.deal-title { font-size: 13.5px; line-height: 1.35; color: var(--charcoal); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 5px; }
+.deal-prices { display: flex; align-items: baseline; gap: 7px; }
+.deal-sale { font-size: 15px; font-weight: 600; color: var(--terra); }
+.deal-orig { font-size: 12px; color: var(--muted); text-decoration: line-through; }
+.deal-disc { font-size: 10.5px; color: #fff; background: var(--teal); padding: 1px 6px; border-radius: 3px; font-weight: 600; margin-left: auto; align-self: flex-start; white-space: nowrap; }
+
+.foot { text-align: center; padding: 24px 20px 40px; }
+.foot a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); text-decoration: none; font-weight: 500; }
+
+.loading, .empty { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="live"><div class="live-dot"></div><span class="live-text">Updated Daily</span></div>
+  <h1>Today's Top Finds</h1>
+  <p>Tap any deal to shop it — one site, every retailer, only clearance.</p>
+</div>
+
+<div class="wrap" id="deals-wrap">
+  <div class="loading">Loading today's best deals&hellip;</div>
+</div>
+
+<div class="foot"><a href="/">See everything on Clearance Fanatic &rarr;</a></div>
+
+<script>
+const TS_HOST='w7vkyiopn2jlg0tcp-1.a1.typesense.net';
+const TS_KEY='eZxYHgUgM0WgPkD0E3eTLhMMa6uMsgX4';
+const COL='products';
+const LIMIT=12;
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function card(d){
+  const img=d.image_url?`<img class="deal-img" src="${esc(d.image_url)}" alt="${esc(d.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=deal-img-placeholder>&#127991;</div>'">`:`<div class="deal-img-placeholder">&#127991;</div>`;
+  return `<a class="deal-card" href="/?p=${encodeURIComponent(d.id)}">
+    ${img}
+    <div class="deal-body">
+      <div class="deal-merch">${esc(d.merchant||'')}</div>
+      <div class="deal-title">${esc(d.title)}</div>
+      <div class="deal-prices">
+        <span class="deal-sale">$${Number(d.sale_price).toFixed(2)}</span>
+        <span class="deal-orig">$${Number(d.price).toFixed(2)}</span>
+        <span class="deal-disc">${d.discount_percent}% off</span>
+      </div>
+    </div>
+  </a>`;
+}
+
+async function loadDeals(){
+  const wrap=document.getElementById('deals-wrap');
+  try{
+    const p=new URLSearchParams({
+      q:'*', query_by:'title',
+      filter_by:'availability:=true && discount_percent:>=50',
+      sort_by:'discount_percent:desc',
+      per_page: LIMIT
+    });
+    const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
+    if(!r.ok){wrap.innerHTML='<div class="empty">Could not load deals right now — try again shortly.</div>';return;}
+    const data=await r.json();
+    const hits=data.hits||[];
+    if(!hits.length){wrap.innerHTML='<div class="empty">No deals found right now — check back soon.</div>';return;}
+    wrap.innerHTML=hits.map(h=>card(h.document)).join('');
+  }catch(e){
+    console.error('Deals load failed:',e);
+    wrap.innerHTML='<div class="empty">Could not load deals right now — try again shortly.</div>';
+  }
+}
+
+loadDeals();
+</script>
+
+</body>
+</html>
