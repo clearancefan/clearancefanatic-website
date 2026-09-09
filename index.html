@@ -610,9 +610,9 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
   <button class="chip" id="chip-70" onclick="quickFilter('70')">70%+ off</button>
   <button class="chip" id="chip-under10" onclick="quickFilter('under10')">Under $10</button>
   <select class="sort-sel" id="sort-sel" onchange="changeSort()">
-    <option value="discount_percent:desc">Biggest discount</option>
-    <option value="sale_price:asc">Lowest price</option>
-    <option value="price:desc">Highest original</option>
+    <option value="discount_percent:desc,daily_seed:desc">Biggest discount</option>
+    <option value="sale_price:asc,daily_seed:desc">Lowest price</option>
+    <option value="price:desc,daily_seed:desc">Highest original</option>
   </select>
 </div>
 
@@ -701,7 +701,7 @@ const SUPABASE_URL='https://zqroclogwifyzztffsjk.supabase.co';
 const SUPABASE_KEY='sb_publishable_ZEkSUNixCsLP5ZtQ_DB9uw_QaL2VyPH';
 let sb=null, savedIds=new Set(), PRODUCTS={};
 
-let S={q:'*',page:1,sort:'discount_percent:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0};
+let S={q:'*',page:1,sort:'discount_percent:desc,daily_seed:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0};
 
 const CAT_MAP={
 'Shirts & Tops':'Apparel & Accessories > Clothing > Shirts & Tops',
