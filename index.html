@@ -161,13 +161,54 @@ button { font-family: var(--sans); }
 .card:hover .card-btn { background: var(--terra); color: var(--cream); border-color: var(--terra); }
 
 /* SPOTLIGHT (single product landing page, used by Pinterest/social links) */
-.jd { margin-bottom: 26px; }
-.jd-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
-.jd-title { font-family: var(--serif); font-size: 22px; color: var(--charcoal); }
-.jd-sub { font-size: 12px; color: var(--muted); }
-.jd-row { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
-.jd-row .card { flex: 0 0 190px; scroll-snap-align: start; }
-@media (max-width: 768px) { .jd-row { gap: 10px; } .jd-row .card { flex-basis: 160px; } }
+/* CURATED HOMEPAGE SECTIONS */
+.cs { padding: 40px 28px; border-bottom: var(--border); }
+.cs-in { max-width: 1400px; margin: 0 auto; }
+.cs-h { font-family: var(--serif); font-size: 30px; text-align: center; color: var(--charcoal); line-height: 1.15; }
+.cs-sub { text-align: center; font-size: 13px; color: var(--muted); margin: 6px 0 26px; }
+.cs-white { background: #fff; }
+.cs-cream { background: var(--cream); }
+.cat-row { display: flex; justify-content: center; gap: 26px; flex-wrap: wrap; }
+.cat-tile { width: 128px; text-align: center; cursor: pointer; background: none; border: none; font-family: var(--sans); color: var(--charcoal); }
+.cat-img { width: 128px; height: 128px; border-radius: 50%; overflow: hidden; background: #e9e6e0; border: 3px solid #fff; box-shadow: 0 0 0 1.5px var(--charcoal); transition: transform .15s; }
+.cat-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cat-tile:hover .cat-img { transform: scale(1.04); box-shadow: 0 0 0 2.5px var(--terra); }
+.cat-lab { margin-top: 10px; font-size: 13px; font-weight: 500; }
+.gift-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.gift-tile { position: relative; aspect-ratio: 1 / 1.08; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; background: #e9e6e0; border: none; padding: 0; text-align: left; font-family: var(--sans); }
+.gift-tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .25s; }
+.gift-tile:hover img { transform: scale(1.04); }
+.gift-lab { position: absolute; left: 0; right: 0; bottom: 0; background: var(--charcoal); color: #fff; padding: 13px 16px; }
+.gift-lab b { display: block; font-family: var(--serif); font-weight: 400; font-size: 20px; }
+.gift-lab span { font-size: 12px; color: var(--gold); letter-spacing: .04em; }
+.cs-dark { background: var(--charcoal); border-bottom: none; }
+.cs-dark .cs-h { color: #fff; text-align: left; }
+.jd-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+.jd-sub { font-size: 13px; color: var(--gold); margin-top: 4px; }
+.jd-all { background: none; border: 1.5px solid #fff; color: #fff; padding: 9px 18px; border-radius: 99px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; font-family: var(--sans); }
+.jd-all:hover { background: #fff; color: var(--charcoal); }
+.jd-wrap { position: relative; }
+.jd-row { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.jd-row::-webkit-scrollbar { display: none; }
+.jd-row .card { flex: 0 0 200px; scroll-snap-align: start; }
+.jd-arrow { position: absolute; top: 40%; width: 40px; height: 40px; border-radius: 50%; border: none; background: #fff; color: var(--charcoal); font-size: 18px; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.35); z-index: 2; }
+.jd-arrow.l { left: -14px; } .jd-arrow.r { right: -14px; }
+.bh { padding: 34px 28px 8px; background: var(--cream); }
+.bh-in { max-width: 1400px; margin: 0 auto; display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.bh h2 { font-family: var(--serif); font-size: 30px; font-weight: 400; }
+.bh p { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.bh-back { background: none; border: none; color: var(--terra); font-size: 13px; cursor: pointer; font-family: var(--sans); text-decoration: underline; }
+@media (max-width: 768px) {
+  .cs { padding: 28px 14px; }
+  .cs-h { font-size: 24px; }
+  .cat-row { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; gap: 16px; padding-bottom: 6px; scrollbar-width: none; }
+  .cat-tile { flex: 0 0 96px; width: 96px; } .cat-img { width: 96px; height: 96px; }
+  .gift-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .gift-lab { padding: 9px 11px; } .gift-lab b { font-size: 16px; }
+  .jd-row { gap: 10px; } .jd-row .card { flex-basis: 160px; }
+  .jd-arrow { display: none; }
+  .bh { padding: 24px 14px 4px; } .bh h2 { font-size: 24px; }
+}
 .spotlight { background: var(--card-bg, #fff); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 28px; display: flex; gap: 28px; flex-wrap: wrap; border: var(--border); }
 .spotlight-img { flex: 0 0 280px; max-width: 280px; border-radius: 10px; overflow: hidden; background: #EDE9E0; position: relative; }
 .spotlight-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -608,6 +649,35 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
   </div>
 </div>
 
+<div id="curated" style="display:none">
+  <section class="cs cs-white"><div class="cs-in">
+    <h2 class="cs-h">Shop by category</h2>
+    <p class="cs-sub">Today's best markdowns, from every retailer, in one place</p>
+    <div class="cat-row" id="cat-tiles"></div>
+  </div></section>
+  <section class="cs cs-cream" id="gift-sec" style="display:none"><div class="cs-in">
+    <h2 class="cs-h">Gift ideas for every budget</h2>
+    <p class="cs-sub">The holiday list is easier when everything is already marked down</p>
+    <div class="gift-row" id="gift-tiles"></div>
+  </div></section>
+  <section class="cs cs-dark" id="jd-sec" style="display:none"><div class="cs-in">
+    <div class="jd-top">
+      <div><h2 class="cs-h">Just dropped</h2><div class="jd-sub" id="jd-sub"></div></div>
+      <button class="jd-all" onclick="showNewOnly()">See everything new</button>
+    </div>
+    <div class="jd-wrap">
+      <button class="jd-arrow l" onclick="jdScroll(-1)" aria-label="Scroll left">&#8249;</button>
+      <div class="jd-row" id="jd-row"></div>
+      <button class="jd-arrow r" onclick="jdScroll(1)" aria-label="Scroll right">&#8250;</button>
+    </div>
+  </div></section>
+</div>
+
+<div class="bh" id="browse-head"><div class="bh-in">
+  <div><h2 id="bh-title">All clearance finds</h2><p id="bh-sub">Filter by category, brand, size, price and more</p></div>
+  <button class="bh-back" id="bh-back" style="display:none" onclick="goHome()">&larr; Back to featured picks</button>
+</div></div>
+
 <div class="chip-bar">
   <span class="chip-label">Quick filter</span>
   <button class="chip on" id="chip-all" onclick="quickFilter('all')">All finds</button>
@@ -657,7 +727,6 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
 
   <main class="main">
     <div id="spotlight" class="spotlight" style="display:none"></div>
-    <div id="just-dropped" class="jd" style="display:none"></div>
     <div class="results-info" id="results-info">Loading...</div>
     <div id="grid" class="grid"></div>
     <div class="paging" id="paging"></div>
@@ -709,7 +778,7 @@ const SUPABASE_URL='https://zqroclogwifyzztffsjk.supabase.co';
 const SUPABASE_KEY='sb_publishable_ZEkSUNixCsLP5ZtQ_DB9uw_QaL2VyPH';
 let sb=null, savedIds=new Set(), PRODUCTS={};
 
-let S={q:'*',page:1,sort:'discount_percent:desc,daily_seed:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0};
+let S={q:'*',page:1,sort:'discount_percent:desc,daily_seed:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0,newOnly:false};
 
 const CAT_MAP={
 'Shirts & Tops':'Apparel & Accessories > Clothing > Shirts & Tops',
@@ -777,33 +846,120 @@ async function search(){
     render(d);
     renderFacets(d.facet_counts);
     updateStats(d);
-    renderJustDropped();
+    syncCurated();
   }catch(e){console.error('Search failed:',e);showErr();}
 }
 
-// "Just dropped": products first seen in the last 24h. Only shown on the plain
-// homepage view (no search, filters or paging). Needs the first_seen field from
-// ingest.py; if it is missing the row simply stays hidden.
-function isDefaultView(){
-  return S.q==='*'&&S.page===1&&!S.cat&&!S.gender&&!S.ageGroup&&!S.minDisc&&!S.minP&&!S.maxP&&!S.color&&!S.size&&!S.merchant&&!S.brand&&!new URLSearchParams(window.location.search).get('p');
+// ---------- CURATED HOMEPAGE ----------
+const JD_IDS=[];
+let CUR_BUILT=false;
+const CAT_JEWELRY=['Earrings','Necklaces','Bracelets','Rings','Jewelry Sets'].map(k=>CAT_MAP[k]).join('||');
+const CUR_CATS=[
+  {label:'Handbags',cat:CAT_MAP['Handbags']},
+  {label:'Shoes',cat:CAT_MAP['Shoes']},
+  {label:'Jewelry',cat:CAT_JEWELRY},
+  {label:'Dresses',cat:'Apparel & Accessories > Clothing > Dresses'},
+  {label:'Coats & Jackets',cat:CAT_MAP['Coats & Jackets']||'Apparel & Accessories > Clothing > Outerwear > Coats & Jackets'},
+  {label:'Tops',cat:'Apparel & Accessories > Clothing > Shirts & Tops'},
+  {label:'Activewear',cat:'Apparel & Accessories > Clothing > Activewear'},
+  {label:'Home',cat:'Home & Garden'},
+];
+const CUR_GIFTS=[
+  {label:'Gifts under $25',sub:'Shop now',set:{maxP:25,minDisc:50}},
+  {label:'Gifts under $50',sub:'Shop now',set:{maxP:50,minDisc:50}},
+  {label:'Jewelry gifts',sub:'Under $50',set:{cat:CAT_JEWELRY,maxP:50}},
+  {label:'70% off or more',sub:'Biggest markdowns',set:{minDisc:70}},
+];
+function catFilterExpr(cat){
+  const list=cat.split('||').map(c=>'`'+c+'`').join(',');
+  return `category:=[${list}]`;
 }
-async function renderJustDropped(){
-  const box=document.getElementById('just-dropped');
-  if(!box) return;
-  if(!isDefaultView()){box.style.display='none';return;}
+function isDefaultView(ignorePage){
+  return S.q==='*'&&(ignorePage||S.page===1)&&!S.newOnly&&!S.cat&&!S.gender&&!S.ageGroup&&!S.minDisc&&!S.minP&&!S.maxP&&!S.color&&!S.size&&!S.merchant&&!S.brand&&!new URLSearchParams(window.location.search).get('p');
+}
+function curImg(url,alt){return url?`<img src="${esc(url)}" alt="${esc(alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">`:'';}
+async function loadCurated(){
+  if(new URLSearchParams(window.location.search).get('p')) return;
   try{
     const since=Math.floor(Date.now()/1000)-86400;
-    const p=new URLSearchParams({q:'*',query_by:'title',per_page:'16',sort_by:'discount_percent:desc,daily_seed:desc',filter_by:`availability:=true && discount_percent:>=30 && first_seen:>=${since}`});
-    const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
-    if(!r.ok){box.style.display='none';return;}
-    const d=await r.json();
-    const hits=d.hits||[];
-    if(hits.length<6){box.style.display='none';return;}
-    hits.forEach(h=>{PRODUCTS[h.document.id]=h.document;});
-    box.innerHTML=`<div class="jd-head"><div class="jd-title">Just dropped</div><div class="jd-sub">${d.found.toLocaleString()} new markdowns in the last 24 hours</div></div><div class="jd-row">${hits.map(h=>card(h.document)).join('')}</div>`;
-    box.style.display='';
-  }catch(e){box.style.display='none';}
+    const base='availability:=true && ';
+    const searches=[];
+    CUR_CATS.forEach(c=>searches.push({collection:COL,q:'*',query_by:'title',filter_by:base+'discount_percent:>=50 && '+catFilterExpr(c.cat),sort_by:'daily_seed:desc',per_page:4,include_fields:'id,title,image_url'}));
+    CUR_GIFTS.forEach(g=>{
+      let f=base;
+      const t=g.set;
+      f+=`discount_percent:>=${t.minDisc||50}`;
+      if(t.maxP) f+=` && sale_price:<=${t.maxP}`;
+      if(t.cat) f+=' && '+catFilterExpr(t.cat);
+      searches.push({collection:COL,q:'*',query_by:'title',filter_by:f,sort_by:'daily_seed:desc',per_page:4,include_fields:'id,title,image_url'});
+    });
+    searches.push({collection:COL,q:'*',query_by:'title',per_page:16,sort_by:'discount_percent:desc,daily_seed:desc',filter_by:`${base}discount_percent:>=30 && first_seen:>=${since}`});
+    const r=await fetch(`https://${TS_HOST}/multi_search`,{method:'POST',headers:{'X-TYPESENSE-API-KEY':TS_KEY,'Content-Type':'application/json'},body:JSON.stringify({searches})});
+    if(!r.ok) return;
+    const res=(await r.json()).results||[];
+    const pick=x=>((x&&x.hits)||[]).map(h=>h.document).find(d=>d.image_url);
+    // categories
+    let html='';
+    CUR_CATS.forEach((c,i)=>{
+      const d=pick(res[i]);
+      if(!d) return;
+      html+=`<button class="cat-tile" onclick="goTile(${i},'cat')"><div class="cat-img">${curImg(d.image_url,c.label)}</div><div class="cat-lab">${esc(c.label)}</div></button>`;
+    });
+    document.getElementById('cat-tiles').innerHTML=html;
+    // gifts
+    let gh='',gn=0;
+    CUR_GIFTS.forEach((g,i)=>{
+      const d=pick(res[CUR_CATS.length+i]);
+      if(!d) return;
+      gn++;
+      gh+=`<button class="gift-tile" onclick="goTile(${i},'gift')">${curImg(d.image_url,g.label)}<div class="gift-lab"><b>${esc(g.label)}</b><span>${esc(g.sub)} &rarr;</span></div></button>`;
+    });
+    document.getElementById('gift-tiles').innerHTML=gh;
+    document.getElementById('gift-sec').style.display=gn>=3?'':'none';
+    // just dropped
+    const jd=res[res.length-1]||{};
+    const hits=(jd.hits||[]).map(h=>h.document);
+    if(hits.length>=6){
+      hits.forEach(d=>{PRODUCTS[d.id]=d;JD_IDS.push(d.id);});
+      document.getElementById('jd-row').innerHTML=hits.map(d=>card(d)).join('');
+      document.getElementById('jd-sub').textContent=`${(jd.found||hits.length).toLocaleString()} new markdowns in the last 24 hours`;
+      document.getElementById('jd-sec').style.display='';
+    }
+    CUR_BUILT=true;
+  }catch(e){console.error('Curated sections failed',e);}
 }
+function syncCurated(){
+  const home=isDefaultView();
+  const c=document.getElementById('curated');
+  if(c) c.style.display=(home&&CUR_BUILT)?'':'none';
+  const t=document.getElementById('bh-title'),sub=document.getElementById('bh-sub'),back=document.getElementById('bh-back');
+  if(!t) return;
+  if(home){t.textContent='All clearance finds';sub.textContent='Filter by category, brand, size, price and more';back.style.display='none';}
+  else{
+    t.textContent=S.newOnly?'New in the last 24 hours':(S.q&&S.q!=='*'?`Results for "${S.q}"`:'Your results');
+    sub.textContent='';
+    back.style.display=CUR_BUILT?'':'none';
+  }
+}
+function jumpToBrowse(){
+  const el=document.getElementById('browse-head');
+  if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-10,behavior:'smooth'});
+}
+function goTile(i,kind){
+  clearState();S.q='*';S.newOnly=false;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  if(kind==='cat') S.cat=CUR_CATS[i].cat;
+  else Object.assign(S,CUR_GIFTS[i].set);
+  S.page=1;search();jumpToBrowse();
+}
+function showNewOnly(){
+  clearState();S.q='*';S.newOnly=true;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  search();jumpToBrowse();
+}
+function goHome(){clearAll();window.scrollTo({top:0,behavior:'smooth'});}
+function jdScroll(dir){const r=document.getElementById('jd-row');if(r) r.scrollBy({left:dir*r.clientWidth*0.8,behavior:'smooth'});}
+
 
 function buildFilter(){
   const p=['availability:=true','discount_percent:>0'];
@@ -812,7 +968,9 @@ function buildFilter(){
   if(S.maxP>0) p.push(`sale_price:<=${S.maxP}`);
   if(S.gender) p.push(`gender:=${S.gender}`);
   if(S.ageGroup) p.push(S.ageGroup.includes(',')?`age_group:=[${S.ageGroup}]`:`age_group:=${S.ageGroup}`);
-  if(S.cat) p.push(S.cat.includes('||')?`category:=[${S.cat.split('||').join(',')}]`:`category:="${S.cat}"`);
+  if(S.cat) p.push(S.cat.includes('||')?catFilterExpr(S.cat):`category:="${S.cat}"`);
+  if(S.newOnly) p.push(`first_seen:>=${Math.floor(Date.now()/1000)-86400}`);
+  if(JD_IDS.length&&isDefaultView(true)) p.push(`id:!=[${JD_IDS.join(',')}]`);
   if(S.color){
     const cl=S.color.toLowerCase();
     const cu=S.color.toUpperCase();
@@ -948,7 +1106,7 @@ function syncMobile(){
 }
 function changeSort(){S.sort=document.getElementById('sort-sel').value;S.page=1;search();}
 function goPage(p){if(p<1)return;S.page=p;window.scrollTo({top:0,behavior:'smooth'});search();}
-function clearState(){S.gender='';S.cat='';S.ageGroup='';S.minDisc=0;S.minP=0;S.maxP=0;S.color='';S.size='';S.merchant='';S.brand='';S.page=1;}
+function clearState(){S.newOnly=false;S.gender='';S.cat='';S.ageGroup='';S.minDisc=0;S.minP=0;S.maxP=0;S.color='';S.size='';S.merchant='';S.brand='';S.page=1;}
 function clearAll(){
   clearState();S.q='*';
   document.getElementById('search-input').value='';
@@ -1086,7 +1244,7 @@ initCookie();
 // INIT
 initSupabase().then(refreshHeartsUI);
 checkSpotlight();
-search();
+loadCurated().finally(()=>search());
 </script>
 </body>
 </html>
