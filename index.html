@@ -656,8 +656,8 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
     <div class="cat-row" id="cat-tiles"></div>
   </div></section>
   <section class="cs cs-cream" id="gift-sec" style="display:none"><div class="cs-in">
-    <h2 class="cs-h">Gift ideas for every budget</h2>
-    <p class="cs-sub">The holiday list is easier when everything is already marked down</p>
+    <h2 class="cs-h">Shop by price</h2>
+    <p class="cs-sub">Pick your budget and see the best markdowns at that price</p>
     <div class="gift-row" id="gift-tiles"></div>
   </div></section>
   <section class="cs cs-dark" id="jd-sec" style="display:none"><div class="cs-in">
@@ -865,9 +865,9 @@ const CUR_CATS=[
   {label:'Home',cat:'Home & Garden'},
 ];
 const CUR_GIFTS=[
-  {label:'Gifts under $25',sub:'Shop now',set:{maxP:25,minDisc:50}},
-  {label:'Gifts under $50',sub:'Shop now',set:{maxP:50,minDisc:50}},
-  {label:'Jewelry gifts',sub:'Under $50',set:{cat:CAT_JEWELRY,maxP:50}},
+  {label:'Under $25',sub:'Shop now',set:{maxP:25,minDisc:50}},
+  {label:'Under $50',sub:'Shop now',set:{maxP:50,minDisc:50}},
+  {label:'Jewelry under $50',sub:'Shop now',set:{cat:CAT_JEWELRY,maxP:50}},
   {label:'70% off or more',sub:'Biggest markdowns',set:{minDisc:70}},
 ];
 function catFilterExpr(cat){
@@ -884,20 +884,26 @@ async function loadCurated(){
     const since=Math.floor(Date.now()/1000)-86400;
     const base='availability:=true && ';
     const searches=[];
-    CUR_CATS.forEach(c=>searches.push({collection:COL,q:'*',query_by:'title',filter_by:base+'discount_percent:>=50 && '+catFilterExpr(c.cat),sort_by:'daily_seed:desc',per_page:4,include_fields:'id,title,image_url'}));
+    CUR_CATS.forEach(c=>searches.push({collection:COL,q:'*',query_by:'title',filter_by:base+'discount_percent:>=50 && '+catFilterExpr(c.cat),sort_by:'daily_seed:desc',per_page:12,include_fields:'id,title,image_url,item_group_id'}));
     CUR_GIFTS.forEach(g=>{
       let f=base;
       const t=g.set;
       f+=`discount_percent:>=${t.minDisc||50}`;
       if(t.maxP) f+=` && sale_price:<=${t.maxP}`;
       if(t.cat) f+=' && '+catFilterExpr(t.cat);
-      searches.push({collection:COL,q:'*',query_by:'title',filter_by:f,sort_by:'daily_seed:desc',per_page:4,include_fields:'id,title,image_url'});
+      searches.push({collection:COL,q:'*',query_by:'title',filter_by:f,sort_by:'daily_seed:desc',per_page:12,include_fields:'id,title,image_url,item_group_id'});
     });
     searches.push({collection:COL,q:'*',query_by:'title',per_page:16,sort_by:'discount_percent:desc,daily_seed:desc',filter_by:`${base}discount_percent:>=30 && first_seen:>=${since}`});
     const r=await fetch(`https://${TS_HOST}/multi_search`,{method:'POST',headers:{'X-TYPESENSE-API-KEY':TS_KEY,'Content-Type':'application/json'},body:JSON.stringify({searches})});
     if(!r.ok) return;
     const res=(await r.json()).results||[];
-    const pick=x=>((x&&x.hits)||[]).map(h=>h.document).find(d=>d.image_url);
+    // Never show the same photo (or the same style in another color) twice across tiles.
+    const usedImg=new Set(),usedGrp=new Set();
+    const pick=x=>{
+      const d=((x&&x.hits)||[]).map(h=>h.document).find(d=>d.image_url&&!usedImg.has(d.image_url)&&!(d.item_group_id&&usedGrp.has(d.item_group_id)));
+      if(d){usedImg.add(d.image_url);if(d.item_group_id)usedGrp.add(d.item_group_id);}
+      return d;
+    };
     // categories
     let html='';
     CUR_CATS.forEach((c,i)=>{
