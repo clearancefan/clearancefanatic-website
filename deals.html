@@ -128,10 +128,39 @@ async function loadFeatured(){
   }catch(e){return [];}
 }
 
+// Picks a varied, shoppable set from a larger pool so the page isn't five sizes
+// of the same rug: fashion first, one of each style, and a cap per category,
+// per merchant and per brand.
+function titleKey(d){
+  return String(d.title||'').toLowerCase().replace(/[^a-z ]/g,' ').split(/\s+/).filter(Boolean).slice(0,5).join(' ');
+}
+function diversify(docs,limit){
+  const isFashion=d=>String(d.category||'').startsWith('Apparel & Accessories');
+  const ordered=docs.filter(isFashion).concat(docs.filter(d=>!isFashion(d)));
+  const out=[],used=new Set(),seenGroup=new Set(),seenTitle=new Set();
+  // Pass 1 is strict. If that leaves the page short, later passes loosen the
+  // per-category / per-merchant / per-brand caps (never the same-style rule).
+  for(const caps of [{c:2,m:4,b:2},{c:3,m:6,b:3},{c:99,m:99,b:99}]){
+    const perCat={},perMerch={},perBrand={};
+    out.forEach(d=>{const c=d.category||'?',m=d.merchant||'?',b=d.brand||'?';perCat[c]=(perCat[c]||0)+1;perMerch[m]=(perMerch[m]||0)+1;perBrand[b]=(perBrand[b]||0)+1;});
+    for(const d of ordered){
+      if(out.length>=limit) break;
+      if(used.has(d.id)) continue;
+      const g=d.item_group_id||'',t=titleKey(d),c=d.category||'?',m=d.merchant||'?',b=d.brand||'?';
+      if((g&&seenGroup.has(g))||seenTitle.has(t)) continue;
+      if((perCat[c]||0)>=caps.c||(perMerch[m]||0)>=caps.m||(perBrand[b]||0)>=caps.b) continue;
+      out.push(d);used.add(d.id);if(g)seenGroup.add(g);seenTitle.add(t);
+      perCat[c]=(perCat[c]||0)+1;perMerch[m]=(perMerch[m]||0)+1;perBrand[b]=(perBrand[b]||0)+1;
+    }
+    if(out.length>=limit) break;
+  }
+  return out;
+}
+
 async function loadDeals(featuredIds){
   const wrap=document.getElementById('deals-wrap');
   try{
-    let filter='availability:=true && discount_percent:>=50';
+    let filter='availability:=true && discount_percent:>=50 && discount_percent:<=90 && sale_price:>=5 && sale_price:<=250';
     if(featuredIds&&featuredIds.length){
       filter+=` && id:!=[${featuredIds.map(i=>'`'+i+'`').join(',')}]`;
       document.getElementById('top-head').style.display='';
@@ -139,15 +168,17 @@ async function loadDeals(featuredIds){
     const p=new URLSearchParams({
       q:'*', query_by:'title',
       filter_by:filter,
-      sort_by:'discount_percent:desc',
-      per_page: LIMIT
+      sort_by:'daily_seed:desc',
+      per_page: 100
     });
     const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
     if(!r.ok){wrap.innerHTML='<div class="empty">Could not load deals right now — try again shortly.</div>';return;}
     const data=await r.json();
-    const hits=data.hits||[];
-    if(!hits.length){wrap.innerHTML='<div class="empty">No deals found right now — check back soon.</div>';return;}
-    wrap.innerHTML=hits.map(h=>card(h.document)).join('');
+    const pool=(data.hits||[]).map(h=>h.document);
+    let docs=diversify(pool,LIMIT);
+    if(docs.length<6) docs=pool.slice(0,LIMIT);   // never leave the page nearly empty
+    if(!docs.length){wrap.innerHTML='<div class="empty">No deals found right now — check back soon.</div>';return;}
+    wrap.innerHTML=docs.map(d=>card(d)).join('');
   }catch(e){
     console.error('Deals load failed:',e);
     wrap.innerHTML='<div class="empty">Could not load deals right now — try again shortly.</div>';
