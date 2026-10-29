@@ -778,7 +778,7 @@ const SUPABASE_URL='https://zqroclogwifyzztffsjk.supabase.co';
 const SUPABASE_KEY='sb_publishable_ZEkSUNixCsLP5ZtQ_DB9uw_QaL2VyPH';
 let sb=null, savedIds=new Set(), PRODUCTS={};
 
-let S={q:'*',page:1,sort:'discount_percent:desc,daily_seed:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0,newOnly:false};
+let S={q:'*',page:1,sort:'discount_percent:desc,daily_seed:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0,newOnly:false,title:''};
 
 const CAT_MAP={
 'Shirts & Tops':'Apparel & Accessories > Clothing > Shirts & Tops',
@@ -942,10 +942,32 @@ function syncCurated(){
   if(!t) return;
   if(home){t.textContent='All clearance finds';sub.textContent='Filter by category, brand, size, price and more';back.style.display='none';}
   else{
-    t.textContent=S.newOnly?'New in the last 24 hours':(S.q&&S.q!=='*'?`Results for "${S.q}"`:'Your results');
+    t.textContent=S.title||(S.newOnly?'New in the last 24 hours':(S.q&&S.q!=='*'?`Results for "${S.q}"`:'Your results'));
     sub.textContent='';
     back.style.display=CUR_BUILT?'':'none';
   }
+}
+// Links from our social posts open a ready-made view, e.g.
+//   /?q=christmas+pajamas&minDisc=30&t=Christmas+pajamas
+//   /?cat=<category>||<category>&t=Jewelry
+// q = search words, cat = category (several joined by ||), minDisc / minP / maxP
+// = discount and price limits, t = the heading shown above the results.
+function applyUrlParams(){
+  const u=new URLSearchParams(window.location.search);
+  if(u.get('p')) return false;
+  let any=false;
+  const q=(u.get('q')||'').trim();
+  if(q){S.q=q;any=true;const si=document.getElementById('search-input');if(si)si.value=q;}
+  const cat=(u.get('cat')||'').trim();
+  if(cat){S.cat=cat;any=true;}
+  const num=(k)=>{const v=parseFloat(u.get(k));return isFinite(v)&&v>0?v:0;};
+  if(num('minDisc')){S.minDisc=num('minDisc');any=true;}
+  if(num('minP')){S.minP=num('minP');any=true;}
+  if(num('maxP')){S.maxP=num('maxP');any=true;}
+  const t=(u.get('t')||'').trim().slice(0,80);
+  if(any&&t) S.title=t;
+  if(any) document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  return any;
 }
 function jumpToBrowse(){
   const el=document.getElementById('browse-head');
@@ -1075,7 +1097,7 @@ function showSkel(){document.getElementById('grid').innerHTML=Array(12).fill(`<d
 function showErr(){document.getElementById('grid').innerHTML='<div class="empty-state"><div class="empty-icon">&#9888;</div><h3>Could not load products</h3><p>Please check your connection and try again.</p></div>';}
 
 // ACTIONS
-function doSearch(){S.q=document.getElementById('search-input').value.trim()||'*';S.page=1;search();}
+function doSearch(){S.title='';S.q=document.getElementById('search-input').value.trim()||'*';S.page=1;search();}
 function quickFilter(t){
   document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
   clearState();
@@ -1087,14 +1109,15 @@ function quickFilter(t){
   else{document.getElementById('chip-all').classList.add('on');}
   search();
 }
-function filterCat(v){S.cat=v;S.page=1;search();}
-function filterFacet(field,val,on){S[field]=on?val:'';S.page=1;search();}
+function filterCat(v){S.title='';S.cat=v;S.page=1;search();}
+function filterFacet(field,val,on){S.title='';S[field]=on?val:'';S.page=1;search();}
 function filterColor(val,on){
   // Store the display value for checkbox state, but filter will match all case variants
   S.color=on?val:'';S.colorDisplay=on?val:'';S.page=1;search();
 }
 function mobFacet(field,val,on){filterFacet(field,val,on);}
 function applyFilters(){
+  S.title='';
   S.minP=parseFloat(document.getElementById('price-min').value)||0;
   S.maxP=parseFloat(document.getElementById('price-max').value)||0;
   const dl=[{id:'disc-90',v:90},{id:'disc-80',v:80},{id:'disc-70',v:70},{id:'disc-50',v:50}];
@@ -1104,6 +1127,7 @@ function applyFilters(){
   S.page=1;search();
 }
 function syncMobile(){
+  S.title='';
   const dl=[{id:'mob-disc-80',v:80},{id:'mob-disc-70',v:70},{id:'mob-disc-50',v:50}];
   S.minDisc=0;for(const d of dl){if(document.getElementById(d.id).checked){S.minDisc=d.v;break;}}
   const f=document.getElementById('mob-gen-f').checked,m=document.getElementById('mob-gen-m').checked;
@@ -1112,7 +1136,7 @@ function syncMobile(){
 }
 function changeSort(){S.sort=document.getElementById('sort-sel').value;S.page=1;search();}
 function goPage(p){if(p<1)return;S.page=p;window.scrollTo({top:0,behavior:'smooth'});search();}
-function clearState(){S.newOnly=false;S.gender='';S.cat='';S.ageGroup='';S.minDisc=0;S.minP=0;S.maxP=0;S.color='';S.size='';S.merchant='';S.brand='';S.page=1;}
+function clearState(){S.title='';S.newOnly=false;S.gender='';S.cat='';S.ageGroup='';S.minDisc=0;S.minP=0;S.maxP=0;S.color='';S.size='';S.merchant='';S.brand='';S.page=1;}
 function clearAll(){
   clearState();S.q='*';
   document.getElementById('search-input').value='';
@@ -1250,6 +1274,7 @@ initCookie();
 // INIT
 initSupabase().then(refreshHeartsUI);
 checkSpotlight();
+applyUrlParams();
 loadCurated().finally(()=>search());
 </script>
 </body>

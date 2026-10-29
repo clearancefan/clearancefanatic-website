@@ -61,6 +61,17 @@ body { font-family: var(--sans); background: var(--cream); color: var(--charcoal
 .shop-all { display: block; max-width: 448px; margin: 16px auto 0; padding: 13px 18px; background: var(--terra); color: #fff; text-align: center; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; border-radius: var(--radius); }
 .shop-all:active { background: var(--terra-dark); }
 .head { padding-bottom: 22px; }
+.picks-h { font-family: var(--serif); font-size: 21px; font-weight: 400; margin: 6px 2px 4px; color: var(--charcoal); }
+.pick { position: relative; display: block; background: var(--card-bg); border: var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); margin-bottom: 14px; text-decoration: none; color: inherit; overflow: hidden; transition: transform 0.1s; }
+.pick:active { transform: scale(0.98); }
+.pick-tag { position: absolute; top: 10px; left: 10px; z-index: 2; background: var(--terra); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 99px; }
+.pick-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; background: #fff; }
+.pick-strip div { aspect-ratio: 3 / 4; background: var(--faint2); overflow: hidden; }
+.pick-strip img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.pick-body { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px 13px; }
+.pick-title { font-family: var(--serif); font-size: 19px; line-height: 1.2; }
+.pick-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.pick-go { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--terra); white-space: nowrap; }
 .foot { text-align: center; padding: 24px 20px 40px; }
 .foot a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); text-decoration: none; font-weight: 500; }
 
@@ -77,9 +88,14 @@ body { font-family: var(--sans); background: var(--cream); color: var(--charcoal
 </div>
 
 <div class="wrap">
+  <div id="picks-sec" style="display:none">
+    <h2 class="picks-h">This week&rsquo;s picks</h2>
+    <p class="sec-sub">Seen it on Instagram or Facebook? Start here.</p>
+    <div id="picks-wrap"></div>
+  </div>
   <div id="featured-sec" style="display:none">
-    <h2 class="sec-h">Just featured on our feed</h2>
-    <p class="sec-sub">Seen it on Instagram or Facebook? It&rsquo;s right here.</p>
+    <h2 class="sec-h" id="featured-h">Just featured on our feed</h2>
+    <p class="sec-sub" id="featured-sub">Seen it on Instagram or Facebook? It&rsquo;s right here.</p>
     <div id="featured-wrap"></div>
   </div>
   <div id="top-head" style="display:none"><h2 class="sec-h sec-gap">More top finds</h2><p class="sec-sub">The biggest markdowns today.</p></div>
@@ -113,6 +129,31 @@ function card(d,tag){
       </div>
     </div>
   </a>`;
+}
+
+// Category posts (e.g. "Christmas pajamas") from the last three weeks, newest
+// first. They live in their own small "picks" collection. If it doesn't exist
+// yet, or can't be read, this section just stays hidden.
+async function loadPicks(){
+  try{
+    const since=Math.floor(Date.now()/1000)-21*86400;
+    const p=new URLSearchParams({q:'*',query_by:'title',filter_by:`posted_at:>${since}`,sort_by:'posted_at:desc',per_page:2});
+    const r=await fetch(`https://${TS_HOST}/collections/picks/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
+    if(!r.ok) return false;
+    const picks=((await r.json()).hits||[]).map(h=>h.document).filter(d=>typeof d.url==='string'&&d.url.charAt(0)==='/'&&d.url.charAt(1)!=='/');
+    if(!picks.length) return false;
+    const recent=Date.now()/1000-4*86400;
+    document.getElementById('picks-wrap').innerHTML=picks.map((d,i)=>{
+      const imgs=(d.images||[]).filter(Boolean).slice(0,4).map(u=>`<div><img src="${esc(u)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'"></div>`).join('');
+      return `<a class="pick" href="${esc(d.url)}">
+        ${(i===0&&d.posted_at>recent)?'<span class="pick-tag">Just posted</span>':''}
+        ${imgs?`<div class="pick-strip">${imgs}</div>`:''}
+        <div class="pick-body"><div><div class="pick-title">${esc(d.title)}</div>${d.subtitle?`<div class="pick-sub">${esc(d.subtitle)}</div>`:''}</div><div class="pick-go">Shop &rarr;</div></div>
+      </a>`;}).join('');
+    document.getElementById('picks-sec').style.display='';
+    document.getElementById('featured-sub').textContent='The latest finds we posted.';
+    return true;
+  }catch(e){return false;}
 }
 
 // Products our Facebook/Instagram poster featured most recently (newest first).
@@ -189,7 +230,7 @@ async function loadDeals(featuredIds){
   }
 }
 
-loadFeatured().then(ids=>loadDeals(ids));
+loadPicks().then(()=>loadFeatured()).then(ids=>loadDeals(ids));
 </script>
 
 </body>
