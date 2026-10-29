@@ -53,6 +53,11 @@ body { font-family: var(--sans); background: var(--cream); color: var(--charcoal
 .deal-orig { font-size: 12px; color: var(--muted); text-decoration: line-through; }
 .deal-disc { font-size: 10.5px; color: #fff; background: var(--teal); padding: 1px 6px; border-radius: 3px; font-weight: 600; margin-left: auto; align-self: flex-start; white-space: nowrap; }
 
+.sec-h { font-family: var(--serif); font-size: 21px; font-weight: 400; margin: 6px 2px 4px; color: var(--charcoal); }
+.sec-sub { font-size: 12px; color: var(--muted); margin: 0 2px 14px; }
+.sec-gap { margin-top: 26px; }
+.deal-card { position: relative; }
+.deal-tag { position: absolute; top: -8px; left: 12px; background: var(--terra); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 99px; }
 .foot { text-align: center; padding: 24px 20px 40px; }
 .foot a { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); text-decoration: none; font-weight: 500; }
 
@@ -67,8 +72,16 @@ body { font-family: var(--sans); background: var(--cream); color: var(--charcoal
   <p>Tap any deal to shop it — one site, every retailer, only clearance.</p>
 </div>
 
-<div class="wrap" id="deals-wrap">
-  <div class="loading">Loading today's best deals&hellip;</div>
+<div class="wrap">
+  <div id="featured-sec" style="display:none">
+    <h2 class="sec-h">Just featured on our feed</h2>
+    <p class="sec-sub">Seen it on Instagram or Facebook? It&rsquo;s right here.</p>
+    <div id="featured-wrap"></div>
+  </div>
+  <div id="top-head" style="display:none"><h2 class="sec-h sec-gap">More top finds</h2><p class="sec-sub">The biggest markdowns today.</p></div>
+  <div id="deals-wrap">
+    <div class="loading">Loading today's best deals&hellip;</div>
+  </div>
 </div>
 
 <div class="foot"><a href="/">See everything on Clearance Fanatic &rarr;</a></div>
@@ -81,9 +94,10 @@ const LIMIT=12;
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-function card(d){
+function card(d,tag){
   const img=d.image_url?`<img class="deal-img" src="${esc(d.image_url)}" alt="${esc(d.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=deal-img-placeholder>&#127991;</div>'">`:`<div class="deal-img-placeholder">&#127991;</div>`;
   return `<a class="deal-card" href="/?p=${encodeURIComponent(d.id)}">
+    ${tag?`<span class="deal-tag">${esc(tag)}</span>`:''}
     ${img}
     <div class="deal-body">
       <div class="deal-merch">${esc(d.merchant||'')}</div>
@@ -97,12 +111,34 @@ function card(d){
   </a>`;
 }
 
-async function loadDeals(){
+// Products our Facebook/Instagram poster featured most recently (newest first).
+// If the featured_at field doesn't exist yet, or nothing is featured, this
+// section just stays hidden and the page works as before.
+async function loadFeatured(){
+  try{
+    const p=new URLSearchParams({q:'*',query_by:'title',filter_by:'availability:=true && featured_at:>0',sort_by:'featured_at:desc',per_page:6});
+    const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
+    if(!r.ok) return [];
+    const hits=((await r.json()).hits||[]).map(h=>h.document);
+    if(!hits.length) return [];
+    const recent=Date.now()/1000-3*86400;
+    document.getElementById('featured-wrap').innerHTML=hits.map((d,i)=>card(d,(i===0&&d.featured_at>recent)?'Just posted':'')).join('');
+    document.getElementById('featured-sec').style.display='';
+    return hits.map(d=>d.id);
+  }catch(e){return [];}
+}
+
+async function loadDeals(featuredIds){
   const wrap=document.getElementById('deals-wrap');
   try{
+    let filter='availability:=true && discount_percent:>=50';
+    if(featuredIds&&featuredIds.length){
+      filter+=` && id:!=[${featuredIds.map(i=>'`'+i+'`').join(',')}]`;
+      document.getElementById('top-head').style.display='';
+    }
     const p=new URLSearchParams({
       q:'*', query_by:'title',
-      filter_by:'availability:=true && discount_percent:>=50',
+      filter_by:filter,
       sort_by:'discount_percent:desc',
       per_page: LIMIT
     });
@@ -118,7 +154,7 @@ async function loadDeals(){
   }
 }
 
-loadDeals();
+loadFeatured().then(ids=>loadDeals(ids));
 </script>
 
 </body>
