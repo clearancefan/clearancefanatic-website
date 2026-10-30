@@ -34,7 +34,7 @@
   --radius: 6px;
   --radius-lg: 8px;
   --shadow-card: 0 6px 20px rgba(0,0,0,0.06);
-  --sidebar-w: 180px;
+  --sidebar-w: 212px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--sans); background: var(--cream); color: var(--charcoal); min-height: 100vh; font-weight: 400; }
@@ -318,6 +318,47 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
 .cookie-accept { padding: 7px 18px; background: var(--terra); color: #fff; border: none; border-radius: var(--radius); font-size: 13px; font-weight: 500; cursor: pointer; }
 .cookie-decline { padding: 7px 14px; background: transparent; color: #888; border: 1px solid #444; border-radius: var(--radius); font-size: 13px; cursor: pointer; }
 
+
+/* FILTERS (shared by desktop sidebar + mobile sheet) */
+.fg { border-bottom: 0.5px solid var(--faint2); padding: 2px 0 6px; margin-bottom: 6px; }
+.fg-h { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 8px 0 6px; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(42,42,40,0.45); font-weight: 600; user-select: none; }
+.fg-h:hover { color: var(--charcoal); }
+.fg-arr { font-size: 10px; transition: transform .2s; }
+.fg:not(.open) .fg-arr { transform: rotate(-90deg); }
+.fg-n { font-style: normal; background: var(--terra); color: var(--cream); border-radius: 99px; font-size: 9px; padding: 1px 6px; margin-left: 6px; letter-spacing: 0; }
+.fg-b { padding-bottom: 4px; }
+.fg-more { background: none; border: none; color: var(--terra); font-size: 11px; cursor: pointer; padding: 4px 0; font-family: var(--sans); }
+.fg-sub { font-size: 10px; color: rgba(42,42,40,0.35); margin: 8px 0 4px; letter-spacing: .04em; }
+.fg-sub:first-child { margin-top: 0; }
+.pills { display: flex; flex-wrap: wrap; gap: 5px; }
+.pill { font-size: 11px; padding: 4px 9px; border: 1px solid rgba(42,42,40,0.16); border-radius: 99px; background: transparent; color: rgba(42,42,40,0.65); cursor: pointer; font-family: var(--sans); line-height: 1.2; }
+.pill:hover { border-color: var(--terra); color: var(--terra); }
+.pill.on { background: var(--charcoal); border-color: var(--charcoal); color: var(--cream); }
+.swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(42,42,40,0.2); flex-shrink: 0; }
+.ck-ct { font-size: 10px; color: rgba(42,42,40,0.28); margin-left: auto; }
+.active-chips { display: none; flex-wrap: wrap; gap: 6px; align-items: center; margin: 0 0 10px; }
+.active-chips.show { display: flex; }
+.achip { font-size: 11px; padding: 4px 6px 4px 10px; border-radius: 99px; background: var(--terra-light); color: var(--terra); border: none; cursor: pointer; font-family: var(--sans); }
+.achip b { font-weight: 400; margin-left: 4px; opacity: .7; }
+.achip-clear { font-size: 11px; background: none; border: none; color: rgba(42,42,40,0.5); text-decoration: underline; cursor: pointer; font-family: var(--sans); }
+.filters-btn { display: none; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--charcoal); background: var(--charcoal); color: var(--cream); cursor: pointer; font-family: var(--sans); white-space: nowrap; }
+.fbadge { background: var(--terra); color: #fff; border-radius: 99px; font-size: 10px; min-width: 16px; height: 16px; line-height: 16px; text-align: center; padding: 0 4px; display: none; }
+.fbadge.show { display: inline-block; }
+.fp-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 100000; }
+.fp-overlay.open { display: block; }
+.fp-sheet { position: absolute; left: 0; right: 0; bottom: 0; max-height: 90vh; height: 90vh; background: var(--cream); border-radius: 16px 16px 0 0; display: flex; flex-direction: column; transform: translateY(100%); transition: transform .25s ease; }
+.fp-overlay.open .fp-sheet { transform: none; }
+.fp-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: var(--border); font-family: var(--serif); font-size: 18px; }
+.fp-body { flex: 1; overflow-y: auto; padding: 4px 16px 16px; -webkit-overflow-scrolling: touch; }
+.fp-foot { display: flex; gap: 10px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); border-top: var(--border); background: var(--cream); }
+.fp-clear { flex: 0 0 auto; padding: 12px 16px; background: transparent; border: 1px solid var(--faint); border-radius: var(--radius); font-size: 14px; color: rgba(42,42,40,0.6); cursor: pointer; font-family: var(--sans); }
+.fp-show { flex: 1; padding: 12px; background: var(--terra); color: var(--cream); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; font-family: var(--sans); }
+.fp-body .fg-h { font-size: 12px; padding: 12px 0 8px; }
+.fp-body .check-item { font-size: 14px; padding: 6px 0; }
+.fp-body .pill { font-size: 13px; padding: 7px 13px; }
+.fp-body .check-item input[type=checkbox] { width: 16px; height: 16px; }
+@media (max-width: 768px) { .filters-btn { display: inline-flex; } }
+
 /* MOBILE */
 @media (max-width: 768px) {
   .sidebar { display: none; }
@@ -541,10 +582,21 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
 </div>
 
 <!-- MOBILE DRAWER -->
+
+<div class="fp-overlay" id="fp-overlay" onclick="if(event.target===this)closeFilters()">
+  <div class="fp-sheet" role="dialog" aria-label="Filters">
+    <div class="fp-head"><span>Filters</span><button class="mob-close" onclick="closeFilters()" aria-label="Close">&#x2715;</button></div>
+    <div class="fp-body" id="fp-dyn"></div>
+    <div class="fp-foot">
+      <button class="fp-clear" onclick="clearAll()">Clear all</button>
+      <button class="fp-show" id="fp-show" onclick="closeFilters()">Show results</button>
+    </div>
+  </div>
+</div>
 <div class="mob-overlay" id="mob-overlay" onclick="closeMobOverlay(event)">
   <div class="mob-drawer">
     <div class="mob-drawer-head">
-      <span class="mob-drawer-title">Menu & Filters</span>
+      <span class="mob-drawer-title">Menu</span>
       <button class="mob-close" onclick="closeMobile()">&#x2715;</button>
     </div>
 
@@ -609,33 +661,7 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
       </div>
     </div>
 
-    <div class="sb-sec">
-      <div class="sb-h">Category</div>
-      <div id="mob-cat-list"></div>
-    </div>
-    <div class="sb-sec">
-      <div class="sb-h">Brand</div>
-      <div id="mob-brand-list"></div>
-    </div>
-    <div class="sb-sec">
-      <div class="sb-h">Discount</div>
-      <div class="check-item"><input type="checkbox" id="mob-disc-50" onchange="syncMobile()"> 50%+ off</div>
-      <div class="check-item"><input type="checkbox" id="mob-disc-70" onchange="syncMobile()"> 70%+ off</div>
-      <div class="check-item"><input type="checkbox" id="mob-disc-80" onchange="syncMobile()"> 80%+ off</div>
-    </div>
-    <div id="apparel-filters-mobile">
-      <div class="sb-sec">
-        <div class="sb-h">Gender</div>
-        <div class="check-item"><input type="checkbox" id="mob-gen-f" onchange="syncMobile()"> Women</div>
-        <div class="check-item"><input type="checkbox" id="mob-gen-m" onchange="syncMobile()"> Men</div>
-      </div>
-    </div>
-    <div class="sb-sec">
-      <div class="sb-h">Merchant</div>
-      <div id="mob-merch-list"></div>
-    </div>
-    <button class="clear-btn" onclick="clearAll()">Clear all filters</button>
-    <button class="mob-apply" onclick="closeMobile()">See results</button>
+    <button class="mob-apply" onclick="closeMobile();openFilters()">Filter results</button>
   </div>
 </div>
 
@@ -685,6 +711,7 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
 </div></div>
 
 <div class="chip-bar">
+  <button class="filters-btn" id="filters-btn" onclick="openFilters()">&#9776; Filters <span class="fbadge" id="fbadge"></span></button>
   <span class="chip-label">Quick filter</span>
   <button class="chip on" id="chip-all" onclick="quickFilter('all')">All finds</button>
   <button class="chip" id="chip-women" onclick="quickFilter('female')">Women</button>
@@ -701,38 +728,12 @@ footer { background: var(--charcoal); color: var(--cream); padding: 32px 28px 20
 
 <div class="layout">
   <aside class="sidebar">
-    <button class="clear-btn" onclick="clearAll()">Clear all filters</button>
-    <div class="sb-sec"><div class="sb-h">Category</div><div id="cat-list"></div></div>
-    <div class="sb-sec"><div class="sb-h">Brand</div><div id="brand-list"></div></div>
-    <div class="sb-sec">
-      <div class="sb-h">Discount</div>
-      <div class="check-item"><input type="checkbox" id="disc-50" onchange="applyFilters()"> 50%+ off</div>
-      <div class="check-item"><input type="checkbox" id="disc-70" onchange="applyFilters()"> 70%+ off</div>
-      <div class="check-item"><input type="checkbox" id="disc-80" onchange="applyFilters()"> 80%+ off</div>
-      <div class="check-item"><input type="checkbox" id="disc-90" onchange="applyFilters()"> 90%+ off</div>
-    </div>
-    <div class="sb-sec">
-      <div class="sb-h">Price range</div>
-      <div class="price-inputs">
-        <input class="price-input" type="number" id="price-min" placeholder="$0" min="0">
-        <input class="price-input" type="number" id="price-max" placeholder="$500" min="0">
-      </div>
-      <button class="price-apply" onclick="applyFilters()">Apply</button>
-    </div>
-    <div id="apparel-filters-desktop">
-      <div class="sb-sec">
-        <div class="sb-h">Gender</div>
-        <div class="check-item"><input type="checkbox" id="gen-f" onchange="applyFilters()"> Women</div>
-        <div class="check-item"><input type="checkbox" id="gen-m" onchange="applyFilters()"> Men</div>
-      </div>
-      <div class="sb-sec"><div class="sb-h">Color</div><div id="color-list"></div></div>
-      <div class="sb-sec"><div class="sb-h">Size</div><div id="size-list"></div></div>
-    </div>
-    <div class="sb-sec"><div class="sb-h">Merchant</div><div id="merch-list"></div></div>
+    <div id="sb-dyn"></div>
   </aside>
 
   <main class="main">
     <div id="spotlight" class="spotlight" style="display:none"></div>
+    <div class="active-chips" id="active-chips"></div>
     <div class="results-info" id="results-info">Loading...</div>
     <div id="grid" class="grid"></div>
     <div class="paging" id="paging"></div>
@@ -784,7 +785,7 @@ const SUPABASE_URL='https://zqroclogwifyzztffsjk.supabase.co';
 const SUPABASE_KEY='sb_publishable_ZEkSUNixCsLP5ZtQ_DB9uw_QaL2VyPH';
 let sb=null, savedIds=new Set(), PRODUCTS={};
 
-let S={q:'*',page:1,sort:'discount_percent:desc,daily_seed:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0,newOnly:false,title:''};
+let S={q:'*',page:1,sort:'discount_percent:desc,daily_seed:desc',cat:'',gender:'',ageGroup:'',minDisc:0,minP:0,maxP:0,color:'',size:'',merchant:'',brand:'',total:0,newOnly:false,title:'',shopFor:[],colors:[],sizes:[],fits:[]};
 
 const CAT_MAP={
 'Shirts & Tops':'Apparel & Accessories > Clothing > Shirts & Tops',
@@ -817,13 +818,12 @@ function megaFilter(opts){
   S.q = opts.q || '*';
   const si = document.getElementById('search-input');
   if(si) si.value = opts.q || '';
-  if(opts.gender) S.gender=opts.gender;
   if(opts.cat) S.cat=CAT_MAP[opts.cat]||opts.cat;
   if(opts.merchant) S.merchant=opts.merchant;
   if(opts.brand) S.brand=opts.brand;
   if(opts.minDiscount) S.minDisc=opts.minDiscount;
   if(opts.maxPrice) S.maxP=opts.maxPrice;
-  if(opts.ageGroup) S.ageGroup=opts.ageGroup;
+  if(opts.gender||opts.ageGroup) S.shopFor=legacyShop(opts.gender,opts.ageGroup);
   S.page=1;
   search();
 }
@@ -841,9 +841,10 @@ function updateFilterVisibility(){
 
 async function search(){
   showSkel();
+  await probeNorm();
   updateFilterVisibility();
   const f=buildFilter();
-  const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color',per_page:PP,page:S.page,sort_by:S.sort,facet_by:'category,brand,merchant,color,size,gender,age_group,discount_percent',max_facet_values:'30'});
+  const p=new URLSearchParams({q:S.q,query_by:'title,brand,category,merchant,color',per_page:PP,page:S.page,sort_by:S.sort,facet_by:HAS_NORM?'category,brand,merchant,color_family,size_norm,fit,shop_for,discount_percent':'category,brand,merchant,color,size,discount_percent',max_facet_values:'100'});
   if(f) p.set('filter_by',f);
   try{
     const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
@@ -881,7 +882,7 @@ function catFilterExpr(cat){
   return `category:=[${list}]`;
 }
 function isDefaultView(ignorePage){
-  return S.q==='*'&&(ignorePage||S.page===1)&&!S.newOnly&&!S.cat&&!S.gender&&!S.ageGroup&&!S.minDisc&&!S.minP&&!S.maxP&&!S.color&&!S.size&&!S.merchant&&!S.brand&&!new URLSearchParams(window.location.search).get('p');
+  return S.q==='*'&&(ignorePage||S.page===1)&&!S.newOnly&&!S.cat&&!S.gender&&!S.ageGroup&&!S.minDisc&&!S.minP&&!S.maxP&&!S.shopFor.length&&!S.colors.length&&!S.sizes.length&&!S.fits.length&&!S.merchant&&!S.brand&&!new URLSearchParams(window.location.search).get('p');
 }
 function curImg(url,alt){return url?`<img src="${esc(url)}" alt="${esc(alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'">`:'';}
 async function loadCurated(){
@@ -1005,13 +1006,17 @@ function buildFilter(){
   if(S.cat) p.push(S.cat.includes('||')?catFilterExpr(S.cat):`category:="${S.cat}"`);
   if(S.newOnly) p.push(`first_seen:>=${Math.floor(Date.now()/1000)-86400}`);
   if(JD_IDS.length&&isDefaultView(true)) p.push(`id:!=[${JD_IDS.join(',')}]`);
-  if(S.color){
-    const cl=S.color.toLowerCase();
-    const cu=S.color.toUpperCase();
-    const ct=S.color.charAt(0).toUpperCase()+S.color.slice(1).toLowerCase();
-    p.push(`color:=[${cl},${cu},${ct}]`);
+  const bt=v=>'`'+String(v).replace(/`/g,'')+'`';
+  if(S.shopFor.length){
+    if(HAS_NORM) p.push(`shop_for:=[${S.shopFor.map(bt).join(',')}]`);
+    else p.push('('+S.shopFor.map(legacyShopExpr).join(' || ')+')');
   }
-  if(S.size) p.push(`size:=${S.size}`);
+  if(S.colors.length){
+    if(HAS_NORM) p.push(`color_family:=[${S.colors.map(bt).join(',')}]`);
+    else{const vs=[];S.colors.forEach(c=>{vs.push(c.toLowerCase(),c.toUpperCase(),c.charAt(0).toUpperCase()+c.slice(1).toLowerCase());});p.push(`color:=[${[...new Set(vs)].map(bt).join(',')}]`);}
+  }
+  if(S.sizes.length) p.push(`${HAS_NORM?'size_norm':'size'}:=[${S.sizes.map(bt).join(',')}]`);
+  if(S.fits.length&&HAS_NORM) p.push(`fit:=[${S.fits.map(bt).join(',')}]`);
   if(S.merchant) p.push(`merchant:="${S.merchant}"`);
   if(S.brand) p.push(`brand:="${S.brand}"`);
   return p.join(' && ');
@@ -1051,48 +1056,253 @@ function renderPaging(found){
 
 function pageNums(c,t){if(t<=7)return Array.from({length:t},(_,i)=>i+1);if(c<=4)return[1,2,3,4,5,'...',t];if(c>=t-3)return[1,'...',t-4,t-3,t-2,t-1,t];return[1,'...',c-1,c,c+1,'...',t];}
 
-function renderFacets(facets){
-  if(!facets) return;
-  facets.forEach(f=>{
-    if(f.field_name==='category'){
-      const ac=S.cat===''?'on':'';
-      const catSel=S.cat?S.cat.split('||'):[];
-      let h=`<div class="sb-item ${ac}" onclick="filterCat('')">All <span class="sb-ct">${S.total.toLocaleString()}</span></div>`;
-      f.counts.slice(0,12).forEach(c=>{const a=catSel.includes(c.value)?'on':'';const l=c.value.split('>').pop().trim();h+=`<div class="sb-item ${a}" onclick="filterCat('${escJs(c.value)}')">${esc(l)} <span class="sb-ct">${c.count.toLocaleString()}</span></div>`;});
-      document.getElementById('cat-list').innerHTML=h;
-      // mobile mirror
-      let mh=`<div class="sb-item ${ac}" onclick="filterCat('');closeMobile()">All <span class="sb-ct">${S.total.toLocaleString()}</span></div>`;
-      f.counts.slice(0,10).forEach(c=>{const a=catSel.includes(c.value)?'on':'';const l=c.value.split('>').pop().trim();mh+=`<div class="sb-item ${a}" onclick="filterCat('${escJs(c.value)}');closeMobile()">${esc(l)} <span class="sb-ct">${c.count.toLocaleString()}</span></div>`;});
-      document.getElementById('mob-cat-list').innerHTML=mh;
+// ---------- FILTERS (sidebar + mobile sheet) ----------
+let HAS_NORM=false, NORM_PROBED=null, FACETS={}, FG_OPEN=null, FG_MORE={}, ACTIVE=[];
+const SHOP_OPTS=['Women','Men','Girls','Boys','Baby'];
+const COLOR_ORDER=['Black','White','Gray','Beige & Cream','Brown','Blue','Green','Red','Pink','Purple','Yellow','Orange','Gold','Silver','Multi'];
+const SWATCH={'Black':'#1c1c1c','White':'#ffffff','Gray':'#9a9a9a','Beige & Cream':'#e6d8bd','Brown':'#7a5230','Blue':'#2f62b5','Green':'#3f8a4f','Red':'#c8312b','Pink':'#ef8fb0','Purple':'#7d4aa8','Yellow':'#f2cf3a','Orange':'#ee8a2c','Gold':'#d4af37','Silver':'#c4c7cc','Multi':'conic-gradient(#e53935,#fdd835,#43a047,#1e88e5,#8e24aa,#e53935)'};
+const LETTER_ORDER=['XXS','XS','S','M','L','XL','XXL','3XL','4XL','5XL','Mini'];
+const RUG_ORDER=["Runner","Up to 3'x5'","4'x6'","5'x8'","6'x9'","8'x10'","9'x12'","10'x14' & larger"];
+const NO_SIZE_CAT=/Handbags|Earrings|Necklaces|Bracelets|Jewelry Sets|Headbands|Furniture|Scarves/;
+const SIZE_GROUPS=['Sizes','Plus','Numeric','Waist','Bra','Suit','Shoe','Kids shoe','Kids','Baby','Rug','Ring','One size'];
+
+// Old-style gender/age (menus, quick filters) -> the new "Shop for" values
+function legacyShop(g,a){
+  const age=(a||'').split(',').map(x=>x.trim()).filter(Boolean);
+  const out=[];
+  const baby=age.includes('infant')||age.includes('toddler');
+  if(baby) out.push('Baby');
+  if(age.includes('kids')){ if(g!=='male') out.push('Girls'); if(g!=='female') out.push('Boys'); }
+  if(age.includes('adult')||!age.length){
+    if(!baby||age.includes('adult')){
+      if(g!=='male') out.push('Women');
+      if(g!=='female') out.push('Men');
     }
-    if(f.field_name==='brand'){
-      const bh=f.counts.slice(0,20).map(c=>`<div class="check-item"><input type="checkbox" ${S.brand===c.value?'checked':''} onchange="filterFacet('brand','${escJs(c.value)}',this.checked)"> ${esc(c.value)} <span style="font-size:10px;color:rgba(42,42,40,0.22);margin-left:auto">${c.count}</span></div>`).join('');
-      document.getElementById('brand-list').innerHTML=bh;
-      document.getElementById('mob-brand-list').innerHTML=bh.replace(/filterFacet\(/g,'mobFacet(');
-    }
-    if(f.field_name==='color'){
-      // Merge case variations (BLACK, Black, black → Black)
-      const colorMap={};
-      f.counts.forEach(c=>{
-        const normalized=c.value.charAt(0).toUpperCase()+c.value.slice(1).toLowerCase();
-        if(colorMap[normalized]) colorMap[normalized].count+=c.count;
-        else colorMap[normalized]={value:c.value,display:normalized,count:c.count};
-      });
-      const merged=Object.values(colorMap).sort((a,b)=>b.count-a.count);
-      document.getElementById('color-list').innerHTML=merged.slice(0,12).map(c=>`
-        <div class="check-item"><input type="checkbox" ${S.color===c.value?'checked':''}
-          onchange="filterColor('${escJs(c.display)}',this.checked)">
-          ${esc(c.display)} <span style="font-size:10px;color:rgba(42,42,40,0.22);margin-left:auto">${c.count}</span>
-        </div>`).join('');
-    }
-    if(f.field_name==='size'){document.getElementById('size-list').innerHTML=f.counts.slice(0,15).map(c=>`<div class="check-item"><input type="checkbox" ${S.size===c.value?'checked':''} onchange="filterFacet('size','${escJs(c.value)}',this.checked)"> ${esc(c.value)} <span style="font-size:10px;color:rgba(42,42,40,0.22);margin-left:auto">${c.count}</span></div>`).join('');}
-    if(f.field_name==='merchant'){
-      const mh=f.counts.map(c=>`<div class="check-item"><input type="checkbox" ${S.merchant===c.value?'checked':''} onchange="filterFacet('merchant','${escJs(c.value)}',this.checked)"> ${esc(c.value)} <span style="font-size:10px;color:rgba(42,42,40,0.22);margin-left:auto">${c.count}</span></div>`).join('');
-      document.getElementById('merch-list').innerHTML=mh;
-      document.getElementById('mob-merch-list').innerHTML=mh.replace(/filterFacet\(/g,'mobFacet(');
-    }
-  });
+    if(!age.length&&g==='female'&&!out.includes('Girls')) out.push('Girls');
+    if(!age.length&&g==='male'&&!out.includes('Boys')) out.push('Boys');
+  }
+  return [...new Set(out)];
 }
+// Fallback (before the new fields exist): the same idea using gender + age_group
+function legacyShopExpr(v){
+  return ({Women:'(gender:=female && age_group:=adult)',Men:'(gender:=male && age_group:=adult)',
+    Girls:'(gender:=female && age_group:=kids)',Boys:'(gender:=male && age_group:=kids)',
+    Baby:'(age_group:=[infant,toddler])'})[v]||'(availability:=true)';
+}
+function probeNorm(){
+  if(NORM_PROBED) return NORM_PROBED;
+  NORM_PROBED=(async()=>{
+    try{
+      const p=new URLSearchParams({q:'*',per_page:'0',facet_by:'shop_for,color_family'});
+      const r=await fetch(`https://${TS_HOST}/collections/${COL}/documents/search?${p}`,{headers:{'X-TYPESENSE-API-KEY':TS_KEY}});
+      if(!r.ok){HAS_NORM=false;return;}
+      const d=await r.json();
+      HAS_NORM=(d.facet_counts||[]).some(f=>f.field_name==='shop_for'&&f.counts.length>0);
+    }catch(e){HAS_NORM=false;}
+  })();
+  return NORM_PROBED;
+}
+
+function renderFacets(facets){
+  FACETS={};
+  (facets||[]).forEach(f=>{FACETS[f.field_name]=f.counts||[];});
+  renderFilterUI();
+}
+
+function fgIsOpen(k){
+  if(!FG_OPEN){
+    FG_OPEN={shop:1,cat:1,color:1,size:1,fit:1,brand:1,disc:1,price:0,merch:0};
+    if(window.matchMedia&&matchMedia('(max-width:768px)').matches) FG_OPEN={shop:1,cat:1,color:0,size:0,fit:0,brand:0,disc:0,price:0,merch:0};
+  }
+  return !!FG_OPEN[k];
+}
+function toggleFg(k){fgIsOpen(k);FG_OPEN[k]=FG_OPEN[k]?0:1;renderFilterUI();}
+function toggleMore(k){FG_MORE[k]=!FG_MORE[k];renderFilterUI();}
+function fgHTML(k,title,inner,n){
+  const o=fgIsOpen(k);
+  return `<div class="fg ${o?'open':''}"><div class="fg-h" onclick="toggleFg('${k}')"><span>${title}${n?`<em class="fg-n">${n}</em>`:''}</span><span class="fg-arr">&#9662;</span></div>${o?`<div class="fg-b">${inner}</div>`:''}</div>`;
+}
+function dv(v){return `data-v="${esc(v)}"`;}
+
+function toggleSel(field,val){S.title='';const a=S[field],i=a.indexOf(val);if(i<0)a.push(val);else a.splice(i,1);S.page=1;search();}
+function setDisc(v){S.title='';S.minDisc=S.minDisc===v?0:v;S.page=1;search();}
+function applyPrice(btn){
+  const w=btn.closest('.fg-b');
+  S.title='';
+  S.minP=parseFloat(w.querySelector('.pmin').value)||0;
+  S.maxP=parseFloat(w.querySelector('.pmax').value)||0;
+  S.page=1;search();
+}
+function pickBrand(v,on){S.title='';S.brand=on?v:'';S.page=1;search();}
+function pickMerchant(v,on){S.title='';S.merchant=on?v:'';S.page=1;search();}
+
+function sizeInfo(l){
+  let m;
+  if(l==='One Size') return ['One size',0];
+  if(LETTER_ORDER.includes(l)) return ['Sizes',LETTER_ORDER.indexOf(l)];
+  if((m=l.match(/^([1-5])X$/))) return ['Plus',+m[1]];
+  if(RUG_ORDER.includes(l)) return ['Rug',RUG_ORDER.indexOf(l)];
+  if(/^Kids Shoe/.test(l)) return ['Kids shoe',parseFloat(l.replace(/[^\d.]/g,''))||0];
+  if(/^Shoe /.test(l)) return ['Shoe',parseFloat(l.replace(/[^\d.]/g,''))||0];
+  if(/^Waist /.test(l)) return ['Waist',parseFloat(l.replace(/[^\d.]/g,''))||0];
+  if(/^Ring /.test(l)) return ['Ring',parseFloat(l.replace(/[^\d.]/g,''))||0];
+  if((m=l.match(/^Kids (.+)$/))){const r=m[1];const li=LETTER_ORDER.indexOf(r);return ['Kids',li>=0?li:100+(parseFloat(r)||0)];}
+  if((m=l.match(/^(\d+(?:-\d+)?)([MT])$/))||(m=l.match(/^(NB|Newborn)$/i))){
+    if(!m[2]) return ['Baby',0];
+    const n=parseFloat(m[1]);return ['Baby',m[2]==='M'?n:n*12];
+  }
+  if(/^\d{2}[A-Z]{1,3}$/.test(l)&&/[A-H]/.test(l.slice(-1))&&!/^\d{2}[SRL]$/.test(l)) return ['Bra',parseFloat(l)];
+  if(/^\d{2}[SRL]$/.test(l)) return ['Suit',parseFloat(l)+(l.slice(-1)==='S'?0:l.slice(-1)==='R'?.1:.2)];
+  if(/^\d+(\.\d+)?$/.test(l)) return ['Numeric',parseFloat(l)];
+  return ['Sizes',500];
+}
+function sizesVisible(){
+  if(S.cat){
+    const cats=S.cat.split('||');
+    if(cats.every(c=>NO_SIZE_CAT.test(c))) return false;
+  }
+  if(!S.cat&&S.q==='*'&&!S.newOnly&&!S.sizes.length) return false; // pick a category first
+  return true;
+}
+function sizeShow(l){return l.replace(/^(Kids Shoe|Shoe|Waist|Ring) /,'');}
+function catLabel(c){return c.split('>').pop().trim();}
+
+function moreList(key,items,limit,render){
+  const showAll=FG_MORE[key]||items.length<=limit+2;
+  const shown=showAll?items:items.slice(0,limit);
+  let h=shown.map(render).join('');
+  if(items.length>limit+2) h+=`<button class="fg-more" onclick="toggleMore('${key}')">${showAll?'Show less':'Show '+(items.length-limit)+' more'}</button>`;
+  return h;
+}
+
+function buildFilterHTML(){
+  let h='';
+  ACTIVE=[];
+  const norm=HAS_NORM;
+
+  // Shop for
+  {
+    let opts;
+    if(norm){
+      const m={};(FACETS.shop_for||[]).forEach(c=>m[c.value]=c.count);
+      opts=SHOP_OPTS.filter(o=>m[o]||S.shopFor.includes(o)).map(o=>({v:o,n:m[o]||0}));
+    }else opts=SHOP_OPTS.map(o=>({v:o,n:null}));
+    if(opts.length>=2||S.shopFor.length){
+      const inner='<div class="pills">'+opts.map(o=>`<button class="pill ${S.shopFor.includes(o.v)?'on':''}" ${dv(o.v)} onclick="toggleSel('shopFor',this.dataset.v)">${esc(o.v)}</button>`).join('')+'</div>';
+      h+=fgHTML('shop','Shop for',inner,S.shopFor.length);
+    }
+    S.shopFor.forEach(v=>ACTIVE.push({l:v,f:()=>toggleSel('shopFor',v)}));
+  }
+
+  // Category
+  {
+    const cs=FACETS.category||[];
+    const sel=S.cat?S.cat.split('||'):[];
+    let inner=`<div class="sb-item ${S.cat===''?'on':''}" onclick="filterCat('')">All <span class="sb-ct">${S.total.toLocaleString()}</span></div>`;
+    inner+=moreList('cat',cs,10,c=>`<div class="sb-item ${sel.includes(c.value)?'on':''}" ${dv(c.value)} onclick="filterCat(this.dataset.v)">${esc(catLabel(c.value))} <span class="sb-ct">${c.count.toLocaleString()}</span></div>`);
+    if(cs.length||S.cat) h+=fgHTML('cat','Category',inner,0);
+    if(S.cat) ACTIVE.push({l:S.title&&sel.length>1?S.title:sel.map(catLabel).join(', '),f:()=>filterCat('')});
+  }
+
+  // Discount + price
+  {
+    const inner='<div class="pills">'+[50,70,80,90].map(v=>`<button class="pill ${S.minDisc===v?'on':''}" onclick="setDisc(${v})">${v}%+ off</button>`).join('')+'</div>';
+    h+=fgHTML('disc','Discount',inner,S.minDisc?1:0);
+    if(S.minDisc) ACTIVE.push({l:S.minDisc+'%+ off',f:()=>setDisc(S.minDisc)});
+    const pin=`<div class="price-inputs"><input class="price-input pmin" type="number" min="0" placeholder="$0" value="${S.minP||''}"><input class="price-input pmax" type="number" min="0" placeholder="$500" value="${S.maxP||''}"></div><button class="price-apply" onclick="applyPrice(this)">Apply</button>`;
+    h+=fgHTML('price','Price',pin,(S.minP||S.maxP)?1:0);
+    if(S.minP||S.maxP) ACTIVE.push({l:(S.minP&&S.maxP)?`$${S.minP}–$${S.maxP}`:S.maxP?`Under $${S.maxP}`:`$${S.minP}+`,f:()=>{S.minP=0;S.maxP=0;S.page=1;search();}});
+  }
+
+  // Brand
+  {
+    const bs=FACETS.brand||[];
+    const inner=moreList('brand',bs,8,c=>`<div class="check-item"><input type="checkbox" ${S.brand===c.value?'checked':''} ${dv(c.value)} onchange="pickBrand(this.dataset.v,this.checked)"> ${esc(c.value)} <span class="ck-ct">${c.count}</span></div>`);
+    if(bs.length>1||S.brand) h+=fgHTML('brand','Brand',inner,S.brand?1:0);
+    if(S.brand) ACTIVE.push({l:S.brand,f:()=>pickBrand(S.brand,false)});
+  }
+
+  // Color
+  {
+    let cs;
+    if(norm){
+      cs=(FACETS.color_family||[]).map(c=>({v:c.value,n:c.count}));
+      cs.sort((a,b)=>{
+        if(a.v==='Multi') return 1; if(b.v==='Multi') return -1;
+        return b.n-a.n || COLOR_ORDER.indexOf(a.v)-COLOR_ORDER.indexOf(b.v);
+      });
+    }else{
+      const mm={};
+      (FACETS.color||[]).forEach(c=>{const k=c.value.charAt(0).toUpperCase()+c.value.slice(1).toLowerCase();mm[k]=(mm[k]||0)+c.count;});
+      cs=Object.keys(mm).map(k=>({v:k,n:mm[k]})).sort((a,b)=>b.n-a.n);
+    }
+    S.colors.forEach(c=>{if(!cs.some(x=>x.v===c)) cs.push({v:c,n:0});});
+    const inner=moreList('color',cs,8,c=>`<div class="check-item"><input type="checkbox" ${S.colors.includes(c.v)?'checked':''} ${dv(c.v)} onchange="toggleSel('colors',this.dataset.v)"><span class="swatch" style="background:${SWATCH[c.v]||'#ddd'}"></span> ${esc(c.v)} <span class="ck-ct">${c.n||''}</span></div>`);
+    if(cs.length>1||S.colors.length) h+=fgHTML('color','Color',inner,S.colors.length);
+    S.colors.forEach(v=>ACTIVE.push({l:v,f:()=>toggleSel('colors',v)}));
+  }
+
+  // Size
+  if(sizesVisible()){
+    const raw=(norm?FACETS.size_norm:FACETS.size)||[];
+    const items=raw.map(c=>({v:c.value,n:c.count,g:sizeInfo(c.value)}));
+    S.sizes.forEach(v=>{if(!items.some(i=>i.v===v)) items.push({v,n:0,g:sizeInfo(v)});});
+    const groups={};
+    items.forEach(i=>{(groups[i.g[0]]=groups[i.g[0]]||[]).push(i);});
+    const names=SIZE_GROUPS.filter(g=>groups[g]);
+    const total=items.length;
+    if(total>1||S.sizes.length){
+      let inner='';
+      names.forEach(g=>{
+        const arr=groups[g].sort((a,b)=>a.g[1]-b.g[1]);
+        if(names.length>1) inner+=`<div class="fg-sub">${g}</div>`;
+        inner+='<div class="pills">'+arr.map(i=>`<button class="pill ${S.sizes.includes(i.v)?'on':''}" ${dv(i.v)} title="${i.n} items" onclick="toggleSel('sizes',this.dataset.v)">${esc(sizeShow(i.v))}</button>`).join('')+'</div>';
+      });
+      h+=fgHTML('size','Size',inner,S.sizes.length);
+    }
+    S.sizes.forEach(v=>ACTIVE.push({l:'Size '+v,f:()=>toggleSel('sizes',v)}));
+  }
+
+  // Fit
+  if(norm){
+    const fs=(FACETS.fit||[]).filter(c=>c.value&&c.value!=='Plus');
+    if(sizesVisible()&&(fs.length||S.fits.length)){
+      const inner='<div class="pills">'+fs.map(c=>`<button class="pill ${S.fits.includes(c.value)?'on':''}" ${dv(c.value)} onclick="toggleSel('fits',this.dataset.v)">${esc(c.value)}</button>`).join('')+'</div>';
+      h+=fgHTML('fit','Fit',inner,S.fits.length);
+    }
+    S.fits.forEach(v=>ACTIVE.push({l:v,f:()=>toggleSel('fits',v)}));
+  }
+
+  // Merchant
+  {
+    const ms=FACETS.merchant||[];
+    const inner=moreList('merch',ms,8,c=>`<div class="check-item"><input type="checkbox" ${S.merchant===c.value?'checked':''} ${dv(c.value)} onchange="pickMerchant(this.dataset.v,this.checked)"> ${esc(c.value)} <span class="ck-ct">${c.count}</span></div>`);
+    if(ms.length>1||S.merchant) h+=fgHTML('merch','Store',inner,S.merchant?1:0);
+    if(S.merchant) ACTIVE.push({l:S.merchant,f:()=>pickMerchant(S.merchant,false)});
+  }
+  return h;
+}
+
+function renderFilterUI(){
+  const html=buildFilterHTML();
+  const sb=document.getElementById('sb-dyn'), fp=document.getElementById('fp-dyn');
+  const keep=fp?fp.parentElement.scrollTop:0;
+  if(sb) sb.innerHTML=`<button class="clear-btn" onclick="clearAll()">Clear all filters</button>`+html;
+  if(fp){fp.innerHTML=html;fp.parentElement.scrollTop=keep;}
+  // active chips
+  const ac=document.getElementById('active-chips');
+  if(ac){
+    ac.innerHTML=ACTIVE.map((a,i)=>`<button class="achip" onclick="ACTIVE[${i}].f()">${esc(a.l)}<b>&#10005;</b></button>`).join('')+(ACTIVE.length>1?`<button class="achip-clear" onclick="clearAll()">Clear all</button>`:'');
+    ac.classList.toggle('show',ACTIVE.length>0);
+  }
+  const b=document.getElementById('fbadge');
+  if(b){b.textContent=ACTIVE.length;b.classList.toggle('show',ACTIVE.length>0);}
+  const sh=document.getElementById('fp-show');
+  if(sh) sh.textContent=`Show ${S.total.toLocaleString()} result${S.total===1?'':'s'}`;
+}
+
+function openFilters(){document.getElementById('fp-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeFilters(){document.getElementById('fp-overlay').classList.remove('open');document.body.style.overflow='';}
 
 function updateStats(d){
   const t=(d.found_docs||d.found||0).toLocaleString();
@@ -1108,8 +1318,8 @@ function doSearch(){S.title='';S.q=document.getElementById('search-input').value
 function quickFilter(t){
   document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
   clearState();
-  if(t==='female'){S.gender='female';S.ageGroup='adult';document.getElementById('chip-women').classList.add('on');}
-  else if(t==='male'){S.gender='male';S.ageGroup='adult';document.getElementById('chip-men').classList.add('on');}
+  if(t==='female'){S.shopFor=['Women'];document.getElementById('chip-women').classList.add('on');}
+  else if(t==='male'){S.shopFor=['Men'];document.getElementById('chip-men').classList.add('on');}
   else if(t==='50'){S.minDisc=50;document.getElementById('chip-50').classList.add('on');}
   else if(t==='70'){S.minDisc=70;document.getElementById('chip-70').classList.add('on');}
   else if(t==='under10'){S.maxP=10;document.getElementById('chip-under10').classList.add('on');}
@@ -1117,37 +1327,12 @@ function quickFilter(t){
   search();
 }
 function filterCat(v){S.title='';S.cat=v;S.page=1;search();}
-function filterFacet(field,val,on){S.title='';S[field]=on?val:'';S.page=1;search();}
-function filterColor(val,on){
-  // Store the display value for checkbox state, but filter will match all case variants
-  S.color=on?val:'';S.colorDisplay=on?val:'';S.page=1;search();
-}
-function mobFacet(field,val,on){filterFacet(field,val,on);}
-function applyFilters(){
-  S.title='';
-  S.minP=parseFloat(document.getElementById('price-min').value)||0;
-  S.maxP=parseFloat(document.getElementById('price-max').value)||0;
-  const dl=[{id:'disc-90',v:90},{id:'disc-80',v:80},{id:'disc-70',v:70},{id:'disc-50',v:50}];
-  S.minDisc=0;for(const d of dl){if(document.getElementById(d.id).checked){S.minDisc=d.v;break;}}
-  const gf=document.getElementById('gen-f').checked,gm=document.getElementById('gen-m').checked;
-  S.gender=gf&&!gm?'female':gm&&!gf?'male':'';
-  S.page=1;search();
-}
-function syncMobile(){
-  S.title='';
-  const dl=[{id:'mob-disc-80',v:80},{id:'mob-disc-70',v:70},{id:'mob-disc-50',v:50}];
-  S.minDisc=0;for(const d of dl){if(document.getElementById(d.id).checked){S.minDisc=d.v;break;}}
-  const f=document.getElementById('mob-gen-f').checked,m=document.getElementById('mob-gen-m').checked;
-  S.gender=f&&!m?'female':m&&!f?'male':'';
-  S.page=1;search();
-}
 function changeSort(){S.sort=document.getElementById('sort-sel').value;S.page=1;search();}
 function goPage(p){if(p<1)return;S.page=p;window.scrollTo({top:0,behavior:'smooth'});search();}
-function clearState(){S.title='';S.newOnly=false;S.gender='';S.cat='';S.ageGroup='';S.minDisc=0;S.minP=0;S.maxP=0;S.color='';S.size='';S.merchant='';S.brand='';S.page=1;}
+function clearState(){S.title='';S.newOnly=false;S.gender='';S.cat='';S.ageGroup='';S.minDisc=0;S.minP=0;S.maxP=0;S.shopFor=[];S.colors=[];S.sizes=[];S.fits=[];S.merchant='';S.brand='';S.page=1;}
 function clearAll(){
   clearState();S.q='*';
   document.getElementById('search-input').value='';
-  document.querySelectorAll('#price-min,#price-max').forEach(i=>i.value='');
   document.querySelectorAll('.sidebar input[type=checkbox],.mob-drawer input[type=checkbox]').forEach(c=>c.checked=false);
   document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
   document.getElementById('chip-all').classList.add('on');
